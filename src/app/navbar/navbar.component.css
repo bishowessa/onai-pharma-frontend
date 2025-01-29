@@ -1,0 +1,107 @@
+/* Styling for the navbar */
+.navbar {
+    height: 70px;
+    width: 100vw;
+    background-color: white;
+    border-bottom: 1px solid #ddd; /* Light border */
+    overflow: hidden;
+}
+
+/* Logo styling */
+.navbar-brand img {
+    margin-left: 10px;
+    height: 60px;
+}
+
+/* Navbar items spacing */
+.navbar-nav .nav-item {
+    padding: 10px;
+}
+
+/* Link styling */
+.nav-link {
+    font-size: 17px;
+    font-weight: 500;
+    color: #333; /* Dark text color */
+    transition: all 0.3s ease; /* Smooth transition */
+}
+
+/* Center the buttons */
+.navbar-nav.mx-auto {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Hover effects for the links */
+.nav-link:hover {
+    background-color: #609bdb;
+    border: solid 1px black;
+    text-decoration: none;
+}
+
+/* Login button styling */
+.nav-link.btn {
+    background-color: green;
+    border-radius: 4px;
+    padding: 8px 16px;
+    font-size: 16px;
+}
+
+.nav-link.btn:hover {
+    background-color: rgb(48, 203, 48); /* Darker green on hover */
+}
+
+/* Make sure the navbar links are always visible, even on small screens */
+@media screen and (max-width: 991px) {
+    /* Ensure the navbar links are not hidden and are displayed inline */
+    .navbar-collapse {
+        display: block !important;
+    }
+
+    .navbar-nav {
+        flex-direction: row;
+        justify-content: center;
+    }
+
+    .navbar-nav .nav-item {
+        padding: 5px;
+    }
+
+    .navbar-nav.mx-auto {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .nav-link {
+        font-size: 16px;
+        padding: 8px 12px;
+    }
+
+    /* Remove the navbar-toggler button */
+    .navbar-toggler {
+        display: none;
+    }
+
+    /* Adjust the login button */
+    .navbar-nav .nav-item:last-child {
+        margin-left: auto;
+    }
+}
+
+/* For extra small screens (phones in portrait mode) */
+@media screen and (max-width: 576px) {
+    .nav-link {
+        font-size: 14px;
+    }
+
+    .navbar-nav .nav-item {
+        padding: 8px 0;
+    }
+
+    /* Ensure login button stays aligned */
+    .navbar-nav .nav-item:last-child {
+        margin-left: auto;
+    }
+}
