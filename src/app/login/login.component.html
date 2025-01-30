@@ -1,1 +1,30 @@
-<p>login works!</p>
+<div class="auth-container">
+    <div class="auth-box">
+      <h2>Login</h2>
+      <form (submit)="fetchData($event)">
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="email" name="email" class="form-control" placeholder="Enter your email" required />
+        </div>
+  
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input type="password" name="password" class="form-control" placeholder="Enter your password" required />
+        </div>
+        
+        @if (successMessage) {
+          <div class="alert alert-success">{{ successMessage }}</div>
+        }
+      
+        <!-- Display error message -->
+        @if (failMessage) {
+          <div class="alert alert-danger">{{ failMessage }}</div>
+        }
+
+        <button type="submit" class="auth-btn">Login</button>
+      </form>
+  
+      <p class="switch-link">No account? <a routerLink="/register">Register here</a></p>
+    </div>
+  </div>
+  

@@ -20,11 +20,20 @@
             </ul>
         </div>
 
-        <!-- Login button on the right -->
+        <!-- Show Profile button if logged in, otherwise show Login button -->
         <ul class="navbar-nav">
-            <li class="nav-item">
-                <a class="nav-link btn btn-primary text-white" href="#">Login</a>
-            </li>
+            @if (isLogged) {
+                <li class="nav-item">
+                    <button class="nav-link btn btn-primary text-white" (click)="goToProfile()">{{ userName }}</button>
+                </li>
+                <li class="nav-item">
+                    <button class="nav-link btn btn-danger text-white" (click)="logout()">Logout</button>
+                </li>
+            } @else {
+                <li class="nav-item">
+                    <button class="nav-link btn btn-primary text-white" (click)="login()">Login</button>
+                </li>
+            }
         </ul>
     </div>
 </nav>

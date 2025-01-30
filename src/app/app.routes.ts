@@ -1,6 +1,15 @@
 import { Routes } from '@angular/router';
+import { LoginComponent } from './login/login.component';
+import { RegisterComponent } from './register/register.component';
+import { ProductsComponent } from './products/products.component';
+import { ProfileComponent } from './profile/profile.component';
 
-export const routes: Routes = [];
+export const routes: Routes = [
+    {path: 'login', component: LoginComponent},
+    {path: 'register', component: RegisterComponent},
+    {path: 'products',component: ProductsComponent},
+    { path: 'profile', component: ProfileComponent},
+];
 
 // import { NgModule } from '@angular/core';
 // import { RouterModule, Routes } from '@angular/router';
