@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-profile',
@@ -7,12 +8,24 @@ import { AuthService } from '../services/auth.service';
   styleUrls: ['./profile.component.css']
 })
 export class ProfileComponent implements OnInit {
-  user: any;
+  user: any = null;
 
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService, private router: Router) {}
 
   ngOnInit(): void {
-    // Get the current logged-in user
-    this.user = this.authService.currentUserValue;
+    // Fetch user data when the component initializes
+    this.authService.fetchProfile().subscribe(
+      (response: any) => {
+        this.user = response.user;
+      },
+      (error) => {
+        console.error('Failed to fetch user profile:', error);
+        this.router.navigate(['/login']); // Redirect to login if fetching fails
+      }
+    );
+  }
+
+  logout() {
+    this.authService.logout();
   }
 }

@@ -5,6 +5,7 @@
     background-color: white;
     border-bottom: 1px solid #ddd; /* Light border */
     overflow: hidden;
+    position: relative;
 }
 
 /* Logo styling */
@@ -51,6 +52,59 @@
 .nav-link.btn:hover {
     background-color: rgb(48, 203, 48); /* Darker green on hover */
 }
+
+  /* Dropdown container */
+  .profile-dropdown {
+    position: absolute;
+    top: 100%; /* Position it right below the profile button */
+    right: 0;
+    background-color: white;
+    border-radius: 5px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: 220px; /* Adjust width as needed */
+    padding: 10px;
+    z-index: 9999; /* Ensure it's above other elements */
+    display: block;
+    animation: fadeIn 0.2s ease-out; /* Optional fade-in effect */
+  }
+  
+  /* Dropdown content */
+  .profile-dropdown .dropdown-menu {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .profile-dropdown p {
+    margin: 8px 0;
+    font-size: 14px;
+    color: #333;
+  }
+  
+  .profile-dropdown button {
+    margin-top: 10px;
+    width: 100%;
+    background-color: #dc3545; /* Bootstrap's btn-danger color */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 8px;
+    cursor: pointer;
+  }
+  
+  .profile-dropdown button:hover {
+    background-color: #c82333;
+  }
+  
+  /* Optional: Add fade-in animation for dropdown */
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  
 
 /* Make sure the navbar links are always visible, even on small screens */
 @media screen and (max-width: 991px) {

@@ -1,13 +1,17 @@
-<div class="container mt-5">
-    <div class="card">
-        <div class="card-header">
-            <h2>User Profile</h2>
+<div class="profile-container">
+    <h2>User Profile</h2>
+
+    @if (user) {
+        <div class="profile-details">
+            <p><strong>Name:</strong> {{ user.name }}</p>
+            <p><strong>Email:</strong> {{ user.email }}</p>
+            <p><strong>Phone:</strong> {{ user.phone }}</p>
+            <p><strong>Address:</strong> {{ user.address }}</p>
         </div>
-        <div class="card-body">
-            <p><strong>Name:</strong> {{ user?.name }}</p>
-            <p><strong>Email:</strong> {{ user?.email }}</p>
-            <p><strong>Phone:</strong> {{ user?.phone }}</p>
-            <p><strong>Address:</strong> {{ user?.address }}</p>
-        </div>
-    </div>
+
+        <button class="btn btn-danger" (click)="logout()">Logout</button>
+    }
+    @else {
+        <p>Loading user data...</p>
+    }
 </div>

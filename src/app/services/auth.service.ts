@@ -1,44 +1,64 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
+import { CookieService } from 'ngx-cookie-service';
+import { RouterModule } from '@angular/router';
+import { RouterLink } from '@angular/router';
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
 export class AuthService {
-  private currentUserSubject: BehaviorSubject<any>;
-  public currentUser: any;
+  private apiUrl = 'http://localhost:5000/users'; // Update backend URL if needed
 
-  // New variable to track login status across components
-  private isLoggedSubject = new BehaviorSubject<boolean>(false);
-  public isLogged$ = this.isLoggedSubject.asObservable(); // Observable to subscribe to
+  // User authentication status
+  isLoggedIn = new BehaviorSubject<boolean>(false);
+  currentUser = new BehaviorSubject<any>(null);
 
-  constructor() {
-    this.currentUserSubject = new BehaviorSubject<any>(
-      JSON.parse(localStorage.getItem('currentUser') || 'null')
+  constructor(private http: HttpClient, private router: Router, private cookieService: CookieService) {
+    this.checkLoginStatus();
+  }
+
+  private checkLoginStatus() {
+    const token = this.cookieService.get('jwt');
+    if (token) {
+      this.http.get(`${this.apiUrl}/getCurrentUser`, { withCredentials: true }).subscribe(
+        (response: any) => {
+          this.isLoggedIn.next(true);
+          this.currentUser.next(response.user); // Update currentUser
+        },
+        () => {
+          this.isLoggedIn.next(false);
+          this.currentUser.next(null);
+        }
+      );
+    }
+  }
+
+  login(user: any) {
+    return this.http.post(`${this.apiUrl}/login`, user, { withCredentials: true }).subscribe(
+      (response: any) => {
+        this.cookieService.set('jwt', response.token, { path: '/' });
+        this.isLoggedIn.next(true);
+        this.currentUser.next(response.user); // Update currentUser
+        this.router.navigate(['/products']);
+      },
+      (error) => {
+        console.error('Login failed:', error);
+      }
     );
-    this.currentUser = this.currentUserSubject.asObservable();
-
-    // Initialize isLogged based on currentUser
-    this.isLoggedSubject.next(!!this.currentUserSubject.value);
   }
 
-  public get currentUserValue(): any {
-    return this.currentUserSubject.value;
+  logout() {
+    this.cookieService.delete('jwt', '/'); // Ensure the path matches the one used in set
+    this.isLoggedIn.next(false);
+    this.currentUser.next(null);
+    this.router.navigate(['/login']);
   }
 
-  isLoggedIn(): boolean {
-    return this.isLoggedSubject.value; // Get the latest login status
-  }
-
-  login(user: any): void {
-    localStorage.setItem('currentUser', JSON.stringify(user));
-    this.currentUserSubject.next(user);
-    this.isLoggedSubject.next(true); // Update login status
-  }
-
-  logout(): void {
-    localStorage.removeItem('currentUser');
-    this.currentUserSubject.next(null);
-    this.isLoggedSubject.next(false); // Update login status
+  // Fetch user profile data
+  fetchProfile() {
+    return this.http.get(`${this.apiUrl}/getCurrentUser`, { withCredentials: true });
   }
 }

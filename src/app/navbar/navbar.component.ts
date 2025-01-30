@@ -1,37 +1,31 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
+import { RouterModule } from '@angular/router';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
+  imports: [RouterModule, RouterLink ],
   styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent implements OnInit {
-  isLogged: boolean = false; // Now gets updated dynamically
-  userName: string = '';
+  isLoggedIn = false;
+  user: any = null;
 
   constructor(private authService: AuthService, private router: Router) {}
 
   ngOnInit(): void {
-    // Subscribe to isLogged observable to react to login changes
-    this.authService.isLogged$.subscribe((status) => {
-      this.isLogged = status;
-      const currentUser = this.authService.currentUserValue;
-      this.userName = currentUser ? currentUser.name : '';
-    });
+    this.authService.isLoggedIn.subscribe(status => this.isLoggedIn = status);
+    this.authService.currentUser.subscribe(user => this.user = user);
   }
 
-  login(): void {
-    this.router.navigate(['/login']);
-  }
-
-  goToProfile(): void {
+  goToProfile() {
     this.router.navigate(['/profile']);
   }
 
-  logout(): void {
+  logout() {
     this.authService.logout();
-    this.router.navigate(['/home']);
   }
 }
