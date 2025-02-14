@@ -3,13 +3,22 @@
 
     @if (user) {
         <div class="profile-details">
-            <p><strong>Name:</strong> {{ user.name }}</p>
             <p><strong>Email:</strong> {{ user.email }}</p>
-            <p><strong>Phone:</strong> {{ user.phone }}</p>
-            <p><strong>Address:</strong> {{ user.address }}</p>
+            
+            <p><strong>Name:</strong></p>
+            <input type="text" [value]="updatedUser.name" (input)="updateField('name', $event)" placeholder="Name">
+
+
+            <p><strong>Phone:</strong></p>
+            <input type="text" [value]="updatedUser.phone" (input)="updateField('phone', $event)" placeholder="Phone">
+
+            <p><strong>Address:</strong></p>
+            <input type="text" [value]="updatedUser.address" (input)="updateField('address', $event)" placeholder="Address">
+
+            <button class="btn btn-primary mt-2" (click)="saveChanges()">Save Changes</button>
         </div>
 
-        <button class="btn btn-danger" (click)="logout()">Logout</button>
+        <button class="btn btn-danger mt-3" (click)="logout()">Logout</button>
     }
     @else {
         <p>Loading user data...</p>

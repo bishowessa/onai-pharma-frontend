@@ -3,12 +3,21 @@ import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { ProductsComponent } from './products/products.component';
 import { ProfileComponent } from './profile/profile.component';
-
+import { AddProductComponent } from './add-product/add-product.component';
+import { DisplayProductComponent } from './display-product/display-product.component';
+import { SingleProductComponent } from './single-product/single-product.component';
+import { OrderComponent } from './order/order.component';
 export const routes: Routes = [
     {path: 'login', component: LoginComponent},
     {path: 'register', component: RegisterComponent},
     {path: 'products',component: ProductsComponent},
+    {path: 'products/add',component: AddProductComponent},
+    {path: 'products/:id', component: SingleProductComponent},
     { path: 'profile', component: ProfileComponent},
+    {path: 'order', component: OrderComponent},
+    
+    {path: '', redirectTo: 'products', pathMatch: 'full'},
+    {path: '**', redirectTo: 'products'},
 ];
 
 // import { NgModule } from '@angular/core';

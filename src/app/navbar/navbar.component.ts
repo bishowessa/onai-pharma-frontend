@@ -1,13 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../services/auth.service';
-import { Router } from '@angular/router';
-import { RouterModule } from '@angular/router';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-navbar',
+  imports: [RouterLink],
   templateUrl: './navbar.component.html',
-  imports: [RouterModule, RouterLink ],
   styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent implements OnInit {
@@ -17,9 +15,17 @@ export class NavbarComponent implements OnInit {
   constructor(private authService: AuthService, private router: Router) {}
 
   ngOnInit(): void {
-    this.authService.isLoggedIn.subscribe(status => this.isLoggedIn = status);
-    this.authService.currentUser.subscribe(user => this.user = user);
+    this.authService.isLoggedIn.subscribe(status => {
+      // console.log('[DEBUG] Navbar Login Status:', status);
+      this.isLoggedIn = status;
+    });
+  
+    this.authService.currentUser.subscribe(user => {
+      // console.log('[DEBUG] Navbar User Data:', user);
+      this.user = user; // Ensure user data is set
+    });
   }
+  
 
   goToProfile() {
     this.router.navigate(['/profile']);

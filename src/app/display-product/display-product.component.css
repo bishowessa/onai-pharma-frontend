@@ -1,0 +1,12 @@
+/* display-product.component.css */
+.product-details {
+    text-align: center;
+    margin: 20px;
+  }
+  
+  .product-image {
+    max-width: 100%;
+    height: auto;
+    margin-bottom: 15px;
+  }
+  

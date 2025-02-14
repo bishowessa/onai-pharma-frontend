@@ -1,1 +1,37 @@
-<p>products works!</p>
+<div class="container mt-4">
+    <!-- Add Product Button (Admin Only) -->
+    @if (isAdmin) {
+      <div class="mb-3">
+        <button class="btn btn-success" routerLink="/products/add">Add Product</button>
+      </div>
+    }
+  
+    <!-- Product List -->
+    <div class="row">
+      @for (product of products; track product._id) {
+        <div class="col-md-4 mb-4">
+          <div class="card">
+            <img [src]="product.image" class="card-img-top" [alt]="product.name">         
+            <div class="card-body">
+              <h5 class="card-title">{{ product.name }}</h5>
+              <p class="card-text">{{ product.description }}</p>
+              <p class="card-text"><strong>Price:</strong> ${{ product.price }}</p>
+            @if (isAdmin) {
+
+              <p class="card-text"><strong>Stock:</strong> {{ product.stock }}</p>
+            }
+              <button class="btn btn-primary me-2" routerLink="/order">Order Now</button>
+              <button class="btn btn-secondary me-2" (click)="navigateToDetails(product._id)">Details</button>
+              <!-- Admin Buttons -->
+              @if (isAdmin) {
+                <div class="mt-2">
+                  <!-- <button class="btn btn-warning me-2" [routerLink]="['/products/edit', product._id]">Edit</button> -->
+                  <button class="btn btn-danger" (click)="deleteProduct(product._id)">Delete</button>
+                </div>
+              }
+            </div>
+          </div>
+        </div>
+      }
+    </div>
+  </div>

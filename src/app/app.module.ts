@@ -8,6 +8,7 @@ import { RegisterComponent } from './register/register.component'; // Import Reg
 import { ProductsComponent } from './products/products.component'; // Import ProductsComponent
 import { ProfileComponent } from './profile/profile.component'; // Import ProfileComponent
 import { CommonModule } from '@angular/common'; // Import CommonModule for *ngIf
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { CommonModule } from '@angular/common'; // Import CommonModule for *ngIf
   imports: [
     BrowserModule,
     RouterModule.forRoot([]), // Define routing here if necessary
-    CommonModule // Add CommonModule for *ngIf and other structural directives
+    CommonModule, // Add CommonModule for *ngIf and other structural directives
+    ReactiveFormsModule
   ],
   providers: [],
 //   bootstrap: [AppComponent]

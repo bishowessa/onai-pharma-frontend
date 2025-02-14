@@ -1,0 +1,12 @@
+<!-- display-product.component.html -->
+@if (product) {
+
+
+    <div class="product-details">
+        <h2>{{ product.name }}</h2>
+        <img [src]="product.image" alt="{{ product.name }}" class="product-image">
+        <p><strong>Description:</strong> {{ product.description }}</p>
+        <p><strong>Price:</strong> ${{ product.price }}</p>
+        <p><strong>Stock:</strong> {{ product.stock }}</p>
+    </div>
+}

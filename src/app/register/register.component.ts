@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, inject, OnInit } from '@angular/core';
-import { Router, RouterLink } from '@angular/router';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -11,15 +11,14 @@ import { Router, RouterLink } from '@angular/router';
 })
 export class RegisterComponent implements OnInit {
 
-  successMessage: string | null = null;
-  failMessage: string | null = null;
+  successMessage : string | null = null
+  failMessage : string | null = null
 
-  http = inject(HttpClient);
-  router = inject(Router);
+  http = inject(HttpClient)
 
   fetchData(e: Event) {
-    e.preventDefault();
-    const formData = new FormData((e.target as HTMLFormElement));
+    e.preventDefault(); // Prevent page refresh
+    const formData = new FormData((e.target as HTMLFormElement)); // Get form data
 
     const user = {
       name: formData.get('name') as string,
@@ -29,16 +28,22 @@ export class RegisterComponent implements OnInit {
       address: formData.get('address') as string
     };
 
-    this.http.post('http://localhost:5000/users/register', user)
-      .subscribe((response: any) => {
-        this.successMessage = response.message;
+    console.log('User Data:', user);
+
+    this.http.post('http://localhost:3005/user/register', user)
+      .subscribe((response : any) => {
+        console.log('Response:', response);
+        this.successMessage = response.message
         setTimeout(() => {
           this.successMessage = null;
-          this.router.navigate(['/login']);
-        }, 2000);
+        }, 3000);
       }, error => {
-        this.failMessage = error.error.data.errors[0].msg;
-        setTimeout(() => this.failMessage = null, 3000);
+        console.error('Error:', error);
+        this.failMessage = error.error.data.errors[0].msg
+        setTimeout(() => {
+          this.failMessage = null;
+        },3000)
+
       });
   }
 
