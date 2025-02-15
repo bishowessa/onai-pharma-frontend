@@ -8,7 +8,7 @@
       @if (isAdmin) {
           <p><strong>Stock:</strong> {{ product.stock }}</p>
       }
-      <button class="btn btn-primary me-2" (click)="navigateToOrder(product._id)">Order Now</button>
+      <button class="btn btn-primary me-2"  [routerLink]="['/order']" [queryParams]="{ productId: product._id }">Order Now</button>
     </div>
   }
   

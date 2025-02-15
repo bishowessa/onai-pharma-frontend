@@ -20,7 +20,7 @@
 
               <p class="card-text"><strong>Stock:</strong> {{ product.stock }}</p>
             }
-              <button class="btn btn-primary me-2" routerLink="/order">Order Now</button>
+              <button class="btn btn-primary me-2"  [routerLink]="['/order']" [queryParams]="{ productId: product._id }">Order Now</button>
               <button class="btn btn-secondary me-2" (click)="navigateToDetails(product._id)">Details</button>
               <!-- Admin Buttons -->
               @if (isAdmin) {

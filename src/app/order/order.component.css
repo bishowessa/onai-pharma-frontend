@@ -17,26 +17,38 @@
     color: #555;
   }
   
-  .user-data {
+  .user-details {
     display: flex;
     flex-direction: column;
+    align-items: center;
     margin-bottom: 20px;
+    font-size: 1.1rem;
   }
   
-  .user-info {
+  .user-details p {
+    margin: 5px 0;
+  }
+  
+  .booking-form {
     display: flex;
     flex-direction: column;
+    gap: 20px;
   }
   
   .form-row {
-    width: 100%;
     display: flex;
-    justify-content: space-between;
-    margin-bottom: 20px;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+  
+  .half-width {
+    flex: 1;
+    min-width: 250px;
   }
   
   .form-group {
-    width: 48%;
+    display: flex;
+    flex-direction: column;
   }
   
   .form-control {
@@ -67,10 +79,83 @@
     background-color: #0056b3;
   }
   
+  .selected-products ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .selected-products li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px 0;
+    border-bottom: 1px solid #ccc;
+  }
+  
   .total-price {
+    text-align: center;
     font-size: 1.5rem;
     font-weight: bold;
-    margin: 20px 0;
     color: #28a745;
+    margin: 20px 0;
+  }
+  
+  .alert {
+    padding: 10px;
+    border-radius: 4px;
+    text-align: center;
+    margin-top: 20px;
+  }
+  
+  .alert-success {
+    background-color: #d4edda;
+    color: #155724;
+  }
+  
+  .alert-danger {
+    background-color: #f8d7da;
+    color: #721c24;
+  }
+  
+  @media (max-width: 768px) {
+    .form-row {
+      flex-direction: column;
+    }
+    .half-width {
+      width: 100%;
+    }
+  }
+  
+  .total-price {
+    padding: 10px;
+    background-color: #f8d7da;
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-top: 20px;
+    color: green; /* A professional blue color */
+    text-align: left;
+  }
+  
+  .selected-products {
+    border: 1px solid #ddd;
+    padding: 10px;
+    margin-top: 20px;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+  }
+  
+  .selected-products h3 {
+    color: #007bff;
+    font-weight: bold;
+  }
+  
+  .selected-products ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .selected-products li {
+    padding: 5px 0;
+    font-size: 1.1rem;
   }
   

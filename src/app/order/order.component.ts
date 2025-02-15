@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { AuthService } from '../services/auth.service';
 import { HttpClient } from '@angular/common/http';
+import { ActivatedRoute } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NgFor, NgIf } from '@angular/common';
 
@@ -13,32 +14,42 @@ import { NgFor, NgIf } from '@angular/common';
 })
 export class OrderComponent implements OnInit {
   orderForm!: FormGroup;
-  user: any = null; // User data (prefilled)
+  user: any = null; // User data
   products: any[] = []; // All products
-  selectedProduct: any = { quantity: 1 }; // Selected product with default quantity
-  totalPrice: number = 0; // Total price of the order
+  selectedProducts: any[] = []; // Products selected for the order
+  totalPrice: number = 0; // Cumulative total price
   successMessage: string = '';
   failMessage: string = '';
 
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
-    private http: HttpClient
+    private http: HttpClient,
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit() {
-    // Fetch current user data if logged in
+    // Fetch the selected product ID from query params
+    const selectedProductId = this.route.snapshot.queryParamMap.get('productId');
+
+    // Fetch user data if logged in
     this.authService.currentUser.subscribe((user) => {
-      if (user) {
-        this.user = user;
-        this.initializeForm(user);
-      }
+      this.user = user;
+      this.initializeForm(user);
     });
 
-    // Fetch products data from the backend (assuming you have an API endpoint for this)
+    // Fetch all products
     this.http.get('http://localhost:5000/products').subscribe(
       (response: any) => {
-        this.products = response.data; // Assuming backend returns products in `data`
+        this.products = response.data;
+        
+        // Prefill the selected product if provided
+        if (selectedProductId) {
+          const selectedProduct = this.products.find(product => product._id === selectedProductId);
+          if (selectedProduct) {
+            this.addProductToOrder(selectedProduct);
+          }
+        }
       },
       (error) => {
         console.error('Error fetching products:', error);
@@ -46,61 +57,104 @@ export class OrderComponent implements OnInit {
     );
   }
 
-  // Initialize the form with default values
+  // Initialize the order form
   initializeForm(user: any) {
     this.orderForm = this.fb.group({
       product: [null, Validators.required],
       quantity: [1, [Validators.required, Validators.min(1)]],
-      name: [user.name, [Validators.required]],
-      phone: [user.phone, [Validators.required]],
-      address: [user.address, [Validators.required]],
-      email: [user.email, [Validators.required, Validators.email]],
-      totalPrice: [this.totalPrice, Validators.required]
+      name: [user?.name || '', [Validators.required]],
+      phone: [user?.phone || '', [Validators.required]],
+      address: [user?.address || '', [Validators.required]],
+      email: [user?.email || '', [Validators.required, Validators.email]]
     });
   }
 
-  // Handle product selection change and calculate total price
-  onProductChange(event: any) {
-    const selectedProductId = event.target.value;
-    this.selectedProduct = this.products.find(product => product._id === selectedProductId);
-
-    if (this.selectedProduct) {
-      // Set the default quantity to 1 when product changes
-      this.orderForm.controls['quantity'].setValue(1);
+  // Add a product to the order
+  addProductToOrder(productId: string) {
+    const product = this.products.find(p => p._id === productId);
+    
+    if (product) {
+      const quantity = this.orderForm.controls['quantity'].value;
+  
+      // Check if the product is already in the selectedProducts array
+      const existingProduct = this.selectedProducts.find(p => p._id === productId);
+  
+      if (existingProduct) {
+        // If the product is already in the list, just update the quantity
+        existingProduct.quantity += quantity;
+      } else {
+        // Add a new product entry
+        const productOrder = { ...product, quantity };
+        this.selectedProducts.push(productOrder);
+      }
+  
+      // Recalculate the total price
       this.calculateTotalPrice();
     }
   }
+  
 
-  // Calculate the total price based on the selected product and quantity
+  // Handle product selection change
+  onProductChange(event: any) {
+    const selectedProductId = event.target.value;
+  
+    // Find the selected product but do not add it to the order yet
+    const selectedProduct = this.products.find(product => product._id === selectedProductId);
+  
+    if (selectedProduct) {
+      this.orderForm.controls['quantity'].setValue(1); // Reset quantity to 1
+    }
+  }
+  
+
+  // Calculate the total price for all selected products
   calculateTotalPrice() {
-    const quantity = this.orderForm.controls['quantity'].value;
-    this.totalPrice = this.selectedProduct.price * quantity;
-    this.orderForm.controls['totalPrice'].setValue(this.totalPrice);
+    this.totalPrice = this.selectedProducts.reduce(
+      (total, product) => total + (product.price * product.quantity),
+      0
+    );
   }
 
-  // Submit the order form
+  // Submit the order
   submitOrder() {
-    if (this.orderForm.invalid) {
-      this.failMessage = "Please fill out all required fields correctly.";
+    if (this.orderForm.invalid || this.selectedProducts.length === 0) {
+      this.failMessage = "Please fill out all required fields and select at least one product.";
+      setTimeout(() => {
+        this.failMessage = '';
+      }, 3000);
       return;
     }
 
     const orderData = {
-      ...this.orderForm.value,
-      product: this.selectedProduct._id,  // Ensure the selected product ID is included
-      userId: this.user._id  // Include the user ID to associate the order
+      products: this.selectedProducts.map(product => ({
+        productId: product._id,
+        quantity: product.quantity
+      })),
+      user: {
+        name: this.orderForm.controls['name'].value,
+        phone: this.orderForm.controls['phone'].value,
+        address: this.orderForm.controls['address'].value,
+        email: this.orderForm.controls['email'].value
+      }
     };
 
-    // Call your API to submit the order
     this.http.post('http://localhost:5000/orders', orderData, { withCredentials: true })
       .subscribe(
         response => {
           this.successMessage = "Your order has been placed successfully!";
-          this.failMessage = ''; // Clear any previous error message
+          this.failMessage = '';
+          this.selectedProducts = []; // Clear the selected products
+          this.totalPrice = 0; // Reset total price
+          setTimeout(() => {
+            this.successMessage = '';
+          }, 3000);
         },
         error => {
           this.failMessage = "There was an error placing your order. Please try again.";
-          this.successMessage = ''; // Clear any previous success message
+          this.successMessage = '';
+          setTimeout(() => {
+            this.failMessage = '';
+          }, 3000);
         }
       );
   }

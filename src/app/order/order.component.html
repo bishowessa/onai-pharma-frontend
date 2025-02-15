@@ -1,15 +1,14 @@
 <div class="booking-container">
   <h1 class="booking-title">Place Your Order</h1>
-  <p class="booking-subtitle">
-    Choose your products, fill in the details, and place your order with ease.
-  </p>
+  <p class="booking-subtitle">Choose your products, fill in the details, and place your order with ease.</p>
 
   <!-- Order Form -->
-  <form [formGroup]="orderForm" (ngSubmit)="submitOrder()" class="booking-form" novalidate>
+  <form [formGroup]="orderForm" class="booking-form" novalidate>
     <div class="form-row">
       <div class="form-group half-width">
         <label for="product">Product</label>
         <select id="product" class="form-control" formControlName="product" (change)="onProductChange($event)" required>
+          <option value="" disabled>Select a product</option>
           <option *ngFor="let product of products" [value]="product._id">
             {{ product.name }} - ${{ product.price }}
           </option>
@@ -29,68 +28,52 @@
       </div>
     </div>
 
+    <!-- Button to add selected product to the order list -->
+    <button
+      type="button"
+      class="btn btn-secondary"
+      (click)="addProductToOrder(orderForm.controls['product'].value)"
+    >
+      Add to Order
+    </button>
+
+    <!-- User Information -->
     <div class="form-row">
       <div class="form-group half-width">
         <label for="name">Name</label>
-        <input
-          type="text"
-          id="name"
-          class="form-control"
-          formControlName="name"
-          placeholder="Enter your name"
-          required
-        />
+        <input type="text" id="name" class="form-control" formControlName="name" required />
       </div>
 
       <div class="form-group half-width">
         <label for="phone">Phone</label>
-        <input
-          type="tel"
-          id="phone"
-          class="form-control"
-          formControlName="phone"
-          placeholder="Enter your phone number"
-          required
-        />
+        <input type="tel" id="phone" class="form-control" formControlName="phone" required />
       </div>
     </div>
 
     <div class="form-row">
       <div class="form-group half-width">
         <label for="address">Address</label>
-        <input
-          type="text"
-          id="address"
-          class="form-control"
-          formControlName="address"
-          placeholder="Enter your address"
-          required
-        />
+        <input type="text" id="address" class="form-control" formControlName="address" required />
       </div>
 
       <div class="form-group half-width">
         <label for="email">Email</label>
-        <input
-          type="email"
-          id="email"
-          class="form-control"
-          formControlName="email"
-          placeholder="Enter your email"
-          required
-        />
+        <input type="email" id="email" class="form-control" formControlName="email" required />
       </div>
     </div>
 
-    <!-- Total Price -->
-    <div class="form-group">
-      <label for="totalPrice">Total Price</label>
-      <input
-        type="text"
-        id="totalPrice"
-        class="form-control"
-        formControlName="totalPrice"
-        [disabled]="true"
-      />
+    <!-- Selected Products and Total Price -->
+    <div class="selected-products" *ngIf="selectedProducts.length > 0">
+      <h3>Selected Products</h3>
+      <ul>
+        <li *ngFor="let product of selectedProducts">
+          {{ product.name }} - EGP {{ product.price }} x {{ product.quantity }}
+        </li>
+      </ul>
+    </div>
+
+    <div class="total-price" *ngIf="totalPrice > 0">
+      <h3>Total Price: {{ totalPrice }} EGP</h3>
     </div>
 
     <!-- Success/Error Messages -->
@@ -98,6 +81,6 @@
     <div *ngIf="failMessage" class="alert alert-danger">{{ failMessage }}</div>
 
     <!-- Submit Button -->
-    <button type="submit" class="booking-btn" [disabled]="orderForm.invalid">Place Order</button>
+    <button type="button" class="booking-btn" (click)="submitOrder()">Place Order</button>
   </form>
 </div>

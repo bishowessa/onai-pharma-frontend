@@ -5,6 +5,7 @@ import { AuthService } from '../services/auth.service';
 import { Router, RouterLink } from '@angular/router';
 @Component({
   selector: 'app-single-product',
+  imports: [RouterLink],
   templateUrl: './single-product.component.html',
   styleUrls: ['./single-product.component.css']
 })
