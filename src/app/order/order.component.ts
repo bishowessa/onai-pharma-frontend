@@ -31,23 +31,27 @@ export class OrderComponent implements OnInit {
   ngOnInit() {
     // Fetch the selected product ID from query params
     const selectedProductId = this.route.snapshot.queryParamMap.get('productId');
-
+  
     // Fetch user data if logged in
     this.authService.currentUser.subscribe((user) => {
       this.user = user;
       this.initializeForm(user);
     });
-
+  
     // Fetch all products
     this.http.get('http://localhost:5000/products').subscribe(
       (response: any) => {
         this.products = response.data;
-        
-        // Prefill the selected product if provided
+  
+        // Prefill the selected product in the dropdown if a product ID is provided
         if (selectedProductId) {
           const selectedProduct = this.products.find(product => product._id === selectedProductId);
           if (selectedProduct) {
-            this.addProductToOrder(selectedProduct);
+            // Set the product control to the selected product's ID
+            this.orderForm.controls['product'].setValue(selectedProductId);
+  
+            // Optionally set the quantity to 1 by default
+            this.orderForm.controls['quantity'].setValue(1);
           }
         }
       },
@@ -56,6 +60,7 @@ export class OrderComponent implements OnInit {
       }
     );
   }
+  
 
   // Initialize the order form
   initializeForm(user: any) {
