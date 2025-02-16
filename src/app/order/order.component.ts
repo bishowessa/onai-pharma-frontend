@@ -14,10 +14,10 @@ import { NgFor, NgIf } from '@angular/common';
 })
 export class OrderComponent implements OnInit {
   orderForm!: FormGroup;
-  user: any = null; // User data
-  products: any[] = []; // All products
-  selectedProducts: any[] = []; // Products selected for the order
-  totalPrice: number = 0; // Cumulative total price
+  user: any = null;
+  products: any[] = [];
+  selectedProducts: any[] = [];
+  totalPrice: number = 0;
   successMessage: string = '';
   failMessage: string = '';
 
@@ -31,26 +31,23 @@ export class OrderComponent implements OnInit {
   ngOnInit() {
     // Fetch the selected product ID from query params
     const selectedProductId = this.route.snapshot.queryParamMap.get('productId');
-  
+
     // Fetch user data if logged in
     this.authService.currentUser.subscribe((user) => {
       this.user = user;
       this.initializeForm(user);
     });
-  
+
     // Fetch all products
     this.http.get('http://localhost:5000/products').subscribe(
       (response: any) => {
         this.products = response.data;
-  
-        // Prefill the selected product in the dropdown if a product ID is provided
+
+        // Prefill the selected product if a product ID is provided
         if (selectedProductId) {
           const selectedProduct = this.products.find(product => product._id === selectedProductId);
           if (selectedProduct) {
-            // Set the product control to the selected product's ID
             this.orderForm.controls['product'].setValue(selectedProductId);
-  
-            // Optionally set the quantity to 1 by default
             this.orderForm.controls['quantity'].setValue(1);
           }
         }
@@ -60,9 +57,7 @@ export class OrderComponent implements OnInit {
       }
     );
   }
-  
 
-  // Initialize the order form
   initializeForm(user: any) {
     this.orderForm = this.fb.group({
       product: [null, Validators.required],
@@ -74,45 +69,25 @@ export class OrderComponent implements OnInit {
     });
   }
 
-  // Add a product to the order
-  addProductToOrder(productId: string) {
-    const product = this.products.find(p => p._id === productId);
-    
+  addProductToOrder() {
+    const selectedProductId = this.orderForm.controls['product'].value;
+    const quantity = this.orderForm.controls['quantity'].value;
+
+    const product = this.products.find(p => p._id === selectedProductId);
     if (product) {
-      const quantity = this.orderForm.controls['quantity'].value;
-  
-      // Check if the product is already in the selectedProducts array
-      const existingProduct = this.selectedProducts.find(p => p._id === productId);
-  
+      const existingProduct = this.selectedProducts.find(p => p._id === selectedProductId);
+
       if (existingProduct) {
-        // If the product is already in the list, just update the quantity
         existingProduct.quantity += quantity;
       } else {
-        // Add a new product entry
         const productOrder = { ...product, quantity };
         this.selectedProducts.push(productOrder);
       }
-  
-      // Recalculate the total price
+
       this.calculateTotalPrice();
     }
   }
-  
 
-  // Handle product selection change
-  onProductChange(event: any) {
-    const selectedProductId = event.target.value;
-  
-    // Find the selected product but do not add it to the order yet
-    const selectedProduct = this.products.find(product => product._id === selectedProductId);
-  
-    if (selectedProduct) {
-      this.orderForm.controls['quantity'].setValue(1); // Reset quantity to 1
-    }
-  }
-  
-
-  // Calculate the total price for all selected products
   calculateTotalPrice() {
     this.totalPrice = this.selectedProducts.reduce(
       (total, product) => total + (product.price * product.quantity),
@@ -120,47 +95,42 @@ export class OrderComponent implements OnInit {
     );
   }
 
-  // Submit the order
   submitOrder() {
-    if (this.orderForm.invalid || this.selectedProducts.length === 0) {
-      this.failMessage = "Please fill out all required fields and select at least one product.";
-      setTimeout(() => {
-        this.failMessage = '';
-      }, 3000);
+    if (this.orderForm.invalid) {
+      // Mark all fields as touched to show validation errors
+      this.orderForm.markAllAsTouched();
       return;
     }
-
+  
     const orderData = {
       products: this.selectedProducts.map(product => ({
-        productId: product._id,
-        quantity: product.quantity
-      })),
-      user: {
-        name: this.orderForm.controls['name'].value,
-        phone: this.orderForm.controls['phone'].value,
-        address: this.orderForm.controls['address'].value,
-        email: this.orderForm.controls['email'].value
-      }
+        product: product._id, // Ensure this is the correct field for the product ID
+        quantity: product.quantity,
+      }))
     };
-
+  
     this.http.post('http://localhost:5000/orders', orderData, { withCredentials: true })
       .subscribe(
         response => {
-          this.successMessage = "Your order has been placed successfully!";
-          this.failMessage = '';
-          this.selectedProducts = []; // Clear the selected products
-          this.totalPrice = 0; // Reset total price
+          console.log('Order placed successfully', response);
+          this.successMessage = 'Order placed successfully!, You will be contacted soon';
           setTimeout(() => {
             this.successMessage = '';
-          }, 3000);
+            
+          }, 4000);
+          this.selectedProducts = []; // Clear selected products after a successful order
+          this.totalPrice = 0;        // Reset total price
+          this.orderForm.reset();     // Reset form fields
+          this.initializeForm(this.user);
         },
         error => {
-          this.failMessage = "There was an error placing your order. Please try again.";
-          this.successMessage = '';
-          setTimeout(() => {
-            this.failMessage = '';
-          }, 3000);
+          console.error('Error placing order', error);
+          this.failMessage = 'Failed to place the order. Please try again.';
         }
       );
   }
+  
 }
+
+
+
