@@ -7,6 +7,7 @@ import { AddProductComponent } from './add-product/add-product.component';
 import { DisplayProductComponent } from './display-product/display-product.component';
 import { SingleProductComponent } from './single-product/single-product.component';
 import { OrderComponent } from './order/order.component';
+import { EditProductComponent } from './edit-product/edit-product.component';
 export const routes: Routes = [
     {path: 'login', component: LoginComponent},
     {path: 'register', component: RegisterComponent},
@@ -15,7 +16,9 @@ export const routes: Routes = [
     {path: 'products/:id', component: SingleProductComponent},
     { path: 'profile', component: ProfileComponent},
     {path: 'order', component: OrderComponent},
-    
+    {path: 'editProduct', component: EditProductComponent},
+
+
     {path: '', redirectTo: 'products', pathMatch: 'full'},
     {path: '**', redirectTo: 'products'},
 ];

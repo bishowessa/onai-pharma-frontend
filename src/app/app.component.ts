@@ -8,11 +8,13 @@ import { ProfileComponent } from './profile/profile.component';
 import { AuthService } from './services/auth.service';
 import { AddProductComponent } from './add-product/add-product.component';
 import { DisplayProductComponent } from './display-product/display-product.component';
+import { EditProductComponent } from './edit-product/edit-product.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-root',
   imports: [RouterOutlet, RouterLink,NavbarComponent,LoginComponent, RegisterComponent
-    ,ProductsComponent,ProfileComponent,AddProductComponent,DisplayProductComponent
+    ,ProductsComponent,ProfileComponent,AddProductComponent,DisplayProductComponent,EditProductComponent,ReactiveFormsModule,
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'

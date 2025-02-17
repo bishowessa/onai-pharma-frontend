@@ -185,3 +185,11 @@
 .container.mt-4 {
   margin-top: 3rem;
 }
+
+.btn-warning:hover {
+  background-color: #e0a800;
+}
+
+.btn-warning {
+  margin-left: 2px;
+}

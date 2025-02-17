@@ -27,6 +27,7 @@
                 <div class="mt-2">
                   <!-- <button class="btn btn-warning me-2" [routerLink]="['/products/edit', product._id]">Edit</button> -->
                   <button class="btn btn-danger" (click)="deleteProduct(product._id)">Delete</button>
+                  <button class="btn btn-warning"  [routerLink]="['/editProduct']" [queryParams]="{ productId: product._id }">Edit</button>
                 </div>
               }
             </div>
