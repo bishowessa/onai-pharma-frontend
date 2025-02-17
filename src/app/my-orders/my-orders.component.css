@@ -1,0 +1,37 @@
+.order-table {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.order-card {
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #f8f9fa;
+}
+
+.order-card h5 {
+  font-size: 1.2em;
+  font-weight: bold;
+}
+
+.order-card p {
+  margin: 5px 0;
+}
+
+.order-card button {
+  margin-top: 10px;
+  margin-right: 10px;
+}
+
+@media (min-width: 768px) {
+  .order-card {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .order-card button {
+    width: auto;
+  }
+}

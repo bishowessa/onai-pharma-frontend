@@ -28,7 +28,7 @@ export class AuthService {
   }
   
   /** 🔹 Restore Login State on Refresh */
-  private restoreSession() {
+  public restoreSession() {
     const token = this.cookieService.get('jwt');
     console.log('[DEBUG] Checking JWT from Cookies:', token);
 
