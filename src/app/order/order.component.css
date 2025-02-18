@@ -113,8 +113,22 @@
   }
   
   .alert-danger {
-    background-color: #f8d7da;
-    color: #721c24;
+    color: #a94442;
+    background-color: #f2dede;
+    border-color: #ebccd1;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  .alert a {
+    color: #a94442;
+    text-decoration: underline;
+    font-weight: normal;
+    transition: color 0.2s;
+  }
+  
+  .alert a:hover {
+    color: #843534;
+    text-decoration: none;
   }
   
   @media (max-width: 768px) {

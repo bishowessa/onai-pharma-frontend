@@ -80,7 +80,7 @@
     </div>
 
     <div *ngIf="successMessage" class="alert alert-success">{{ successMessage }}</div>
-    <div *ngIf="failMessage" class="alert alert-danger">{{ failMessage }}</div>
+    <div *ngIf="failMessage" class="alert alert-danger" [innerHTML]="failMessage"></div>
 
     <button type="button" class="booking-btn" (click)="submitOrder()">Place Order</button>
   </form>

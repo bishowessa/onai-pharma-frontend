@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, inject, OnInit } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -11,10 +11,11 @@ import { RouterLink } from '@angular/router';
 })
 export class RegisterComponent implements OnInit {
 
-  successMessage : string | null = null
-  failMessage : string | null = null
+  successMessage: string | null = null;
+  failMessage: string | null = null;
 
-  http = inject(HttpClient)
+  http = inject(HttpClient);
+  router = inject(Router); // Inject the Router service
 
   fetchData(e: Event) {
     e.preventDefault(); // Prevent page refresh
@@ -30,21 +31,24 @@ export class RegisterComponent implements OnInit {
 
     console.log('User Data:', user);
 
-    this.http.post('http://localhost:3005/user/register', user)
-      .subscribe((response : any) => {
-        console.log('Response:', response);
-        this.successMessage = response.message
-        setTimeout(() => {
-          this.successMessage = null;
-        }, 3000);
-      }, error => {
-        console.error('Error:', error);
-        this.failMessage = error.error.data.errors[0].msg
-        setTimeout(() => {
-          this.failMessage = null;
-        },3000)
-
-      });
+    this.http.post('http://localhost:5000/users/register', user)
+      .subscribe(
+        (response: any) => {
+          console.log('Response:', response);
+          this.successMessage = 'Registration successful! Redirecting to login...';
+          setTimeout(() => {
+            this.successMessage = null;
+            this.router.navigate(['/login']); // Redirect to the login page
+          }, 3000); // Wait 3 seconds before redirecting
+        },
+        error => {
+          console.error('Error:', error);
+          this.failMessage = error.error?.data?.errors?.[0]?.msg || 'Registration failed. Please try again.';
+          setTimeout(() => {
+            this.failMessage = null;
+          }, 3000); // Clear error message after 3 seconds
+        }
+      );
   }
 
   ngOnInit(): void {}
