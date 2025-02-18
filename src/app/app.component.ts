@@ -10,12 +10,12 @@ import { AddProductComponent } from './add-product/add-product.component';
 import { DisplayProductComponent } from './display-product/display-product.component';
 import { EditProductComponent } from './edit-product/edit-product.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { StockManagementComponent } from "./stock-management/stock-management.component";
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, RouterLink,NavbarComponent,LoginComponent, RegisterComponent
-    ,ProductsComponent,ProfileComponent,AddProductComponent,DisplayProductComponent,EditProductComponent,ReactiveFormsModule,
-  ],
+  imports: [RouterOutlet, RouterLink, NavbarComponent, LoginComponent, RegisterComponent,
+    ProductsComponent, ProfileComponent, AddProductComponent, DisplayProductComponent, EditProductComponent, ReactiveFormsModule, StockManagementComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })

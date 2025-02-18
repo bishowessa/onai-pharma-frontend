@@ -1,0 +1,49 @@
+<div class="stock-management-container">
+    <h1>Stock Management</h1>
+    
+     <!-- Search Bar -->
+  <div class="search-bar mb-4">
+    <input 
+      type="text" 
+      class="form-control" 
+      [(ngModel)]="searchQuery" 
+      (input)="searchProducts()" 
+      placeholder="Search for products..."
+    />
+    <img src="/search2.jpg" alt="Search" class="search-icon" />
+  </div>
+    
+    <!-- Product List Table -->
+    <div class="product-list">
+      <table class="product-table table table-striped">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Price</th>
+            <th>Stock</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let product of filteredProducts">
+            <td>{{ product.name }}</td>
+            <td>{{ product.description }}</td>
+            <td>{{ product.price | currency:'EGP' }}</td>
+            <td>{{ product.stock }}</td>
+            <td>
+              <button class="btn btn-primary" (click)="addStock(product._id, product.stock)">
+                Add Stock
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    
+    <!-- Message if no products are found -->
+    <div *ngIf="filteredProducts.length === 0" class="no-products">
+      No products found.
+    </div>
+  </div>
+  

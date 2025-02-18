@@ -30,7 +30,7 @@ export class AuthService {
   /** 🔹 Restore Login State on Refresh */
   public restoreSession() {
     const token = this.cookieService.get('jwt');
-    console.log('[DEBUG] Checking JWT from Cookies:', token);
+    // console.log('[DEBUG] Checking JWT from Cookies:', token);
 
     if (token) {
       this.http.get(`${this.apiUrl}/getCurrentUser`, { withCredentials: true }).subscribe(
@@ -48,7 +48,7 @@ export class AuthService {
         }
       );
     } else {
-      console.warn('[WARNING] No JWT token found in cookies.');
+      // console.warn('[WARNING] No JWT token found in cookies.');
     }
   }
 
@@ -118,21 +118,30 @@ export class AuthService {
   }
 
   updateProfile(updatedUser: any) {
-    console.log('[DEBUG] Sending update request:', updatedUser);
+    const token = this.getToken();
+    console.log('[DEBUG] Sending JWT token:', token);
   
     return this.http.patch(`${this.apiUrl}/updateCurrentUser`, updatedUser, { withCredentials: true }).pipe(
       tap((response: any) => {
-        console.log('[DEBUG] Server response:', response);
         this.currentUser.next(response.data); // Ensure the updated user data is set
       }),
       catchError((error) => {
-        console.error('[ERROR] Profile update error:', error);
+        console.error('Profile update error:', error);
         return throwError(error);
       })
     );
   }
   
+
   fetchProfile() {
     return this.http.get(`${this.apiUrl}/getCurrentUser`, { withCredentials: true });
   }
+
+  isAdmin(): boolean {
+    const currentUser = this.currentUser.getValue();
+    return currentUser && currentUser.role === 'admin';
+  }
+  
+
 }
+

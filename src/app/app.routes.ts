@@ -9,10 +9,14 @@ import { SingleProductComponent } from './single-product/single-product.componen
 import { OrderComponent } from './order/order.component';
 import { EditProductComponent } from './edit-product/edit-product.component';
 import { MyOrdersComponent } from './my-orders/my-orders.component';
+
+import { AdminGuard } from './guards/admin.guard';
+import { StockManagementComponent } from './stock-management/stock-management.component';
 export const routes: Routes = [
     {path: 'login', component: LoginComponent},
     {path: 'register', component: RegisterComponent},
     {path: 'products',component: ProductsComponent},
+    {path: 'products/stock', component: StockManagementComponent, canActivate: [AdminGuard]},
     {path: 'products/add',component: AddProductComponent},
     {path: 'products/:id', component: SingleProductComponent},
     { path: 'profile', component: ProfileComponent},
@@ -23,26 +27,3 @@ export const routes: Routes = [
     {path: '', redirectTo: 'products', pathMatch: 'full'},
     {path: '**', redirectTo: 'products'},
 ];
-
-// import { NgModule } from '@angular/core';
-// import { RouterModule, Routes } from '@angular/router';
-// import { HomeComponent } from './components/home/home.component';
-// import { ProductListComponent } from './components/product/product-list/product-list.component';
-// import { OrderComponent } from './components/order/order.component';
-// import { AdminComponent } from './components/admin/admin.component';
-// import { AuthGuard } from './guards/auth.guard';
-// import { AdminGuard } from './guards/admin.guard';
-
-// const routes: Routes = [
-//   { path: '', component: HomeComponent },
-//   { path: 'products', component: ProductListComponent },
-//   { path: 'order', component: OrderComponent, canActivate: [AuthGuard] },
-//   { path: 'admin', component: AdminComponent, canActivate: [AdminGuard] },
-//   { path: '**', redirectTo: '' },
-// ];
-
-// @NgModule({
-//   imports: [RouterModule.forRoot(routes)],
-//   exports: [RouterModule],
-// })
-// export class AppRoutingModule {}

@@ -16,12 +16,11 @@ export class ProfileComponent implements OnInit {
   ngOnInit(): void {
     this.authService.fetchProfile().subscribe(
       (response: any) => {
-        console.log('[DEBUG] Fetched user profile:', response);
         this.user = response.data;
         this.updatedUser = { ...this.user }; // Copy user data for editing
       },
       (error) => {
-        console.error('[ERROR] Failed to fetch user profile:', error);
+        console.error('Failed to fetch user profile:', error);
         this.router.navigate(['/login']); // Redirect if not logged in
       }
     );
@@ -30,14 +29,20 @@ export class ProfileComponent implements OnInit {
   updateField(field: string, event: Event) {
     const target = event.target as HTMLInputElement;
     this.updatedUser[field] = target.value;
-    console.log(`[DEBUG] Updated field ${field}:`, this.updatedUser);
   }
 
   saveChanges() {
-    console.log('[DEBUG] Updated user data before sending:', this.updatedUser);
-    this.authService.updateProfile(this.updatedUser);
+    this.authService.updateProfile(this.updatedUser).subscribe(
+      (response: any) => {
+        alert('Profile updated successfully');
+        this.user = { ...this.updatedUser }; // Update local user data
+      },
+      (error) => {
+        console.error('Error updating profile:', error);
+        alert('Failed to update profile. Please try again.');
+      }
+    );
   }
-  
 
   logout() {
     this.authService.logout();
