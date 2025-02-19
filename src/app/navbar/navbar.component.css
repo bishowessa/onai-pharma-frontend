@@ -5,7 +5,9 @@
     background-color: white;
     border-bottom: 1px solid #ddd; /* Light border */
     overflow: hidden;
-    position: relative;
+    position: fixed;
+    top: 0;
+    
 }
 
 /* Logo styling */

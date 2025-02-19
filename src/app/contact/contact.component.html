@@ -1,0 +1,51 @@
+<div class="contact-container">
+    <h2>Contact Us</h2>
+    <p>If you have any questions or concerns, feel free to reach out to us using the form below or through the provided contact details.</p>
+  
+    <div *ngIf="successMessage" class="alert alert-success">{{ successMessage }}</div>
+    <div *ngIf="failMessage" class="alert alert-danger">{{ failMessage }}</div>
+  
+    <form [formGroup]="contactForm" (ngSubmit)="submitForm()">
+      <div class="form-group">
+        <label for="name">Name:</label>
+        <input type="text" id="name" formControlName="name" />
+        <div *ngIf="contactForm.controls['name'].touched && contactForm.controls['name'].invalid" class="error">
+          Name is required and should be at least 2 characters long.
+        </div>
+      </div>
+  
+      <div class="form-group">
+        <label for="email">Email:</label>
+        <input type="email" id="email" formControlName="email" />
+        <div *ngIf="contactForm.controls['email'].touched && contactForm.controls['email'].invalid" class="error">
+          A valid email is required.
+        </div>
+      </div>
+  
+      <div class="form-group">
+        <label for="subject">Subject:</label>
+        <input type="text" id="subject" formControlName="subject" />
+        <div *ngIf="contactForm.controls['subject'].touched && contactForm.controls['subject'].invalid" class="error">
+          Subject is required.
+        </div>
+      </div>
+  
+      <div class="form-group">
+        <label for="message">Message:</label>
+        <textarea id="message" rows="5" formControlName="message"></textarea>
+        <div *ngIf="contactForm.controls['message'].touched && contactForm.controls['message'].invalid" class="error">
+          Message is required and should be at least 10 characters long.
+        </div>
+      </div>
+  
+      <button type="submit" class="btn">Send Message</button>
+    </form>
+  
+    <div class="contact-details">
+      <h3>Our Contact Information</h3>
+      <p>Email: support&#64;onaipharmaceutical.com</p>
+      <p>Phone: +20 123-456-7890</p>
+      <p>Address: 123 Pharmacy Street, Cairo, Egypt</p>
+    </div>
+  </div>
+  

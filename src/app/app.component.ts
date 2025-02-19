@@ -11,11 +11,12 @@ import { DisplayProductComponent } from './display-product/display-product.compo
 import { EditProductComponent } from './edit-product/edit-product.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { StockManagementComponent } from "./stock-management/stock-management.component";
+import { FooterComponent } from "./footer/footer.component";
 
 @Component({
   selector: 'app-root',
   imports: [RouterOutlet, RouterLink, NavbarComponent, LoginComponent, RegisterComponent,
-    ProductsComponent, ProfileComponent, AddProductComponent, DisplayProductComponent, EditProductComponent, ReactiveFormsModule, StockManagementComponent],
+    ProductsComponent, ProfileComponent, AddProductComponent, DisplayProductComponent, EditProductComponent, ReactiveFormsModule, StockManagementComponent, FooterComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })

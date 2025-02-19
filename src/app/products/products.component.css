@@ -1,3 +1,4 @@
+
 /* Container styling */
 .container {
   padding-top: 2rem;
@@ -119,6 +120,10 @@
   display: flex;
   align-items: center;
   justify-content: flex-start; /* Aligns search bar to the left */
+}
+
+.top-container{
+  margin-top: 40px;
 }
 
 .search-bar input {

@@ -1,7 +1,6 @@
-.order-table {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
+.container {
+  margin-top: 90px;
+  
 }
 
 .order-card {

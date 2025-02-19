@@ -1,22 +1,25 @@
 <div class="container mt-4">
   
-  <!-- Add Product Button (Admin Only) -->
-  @if (isAdmin) {
-    <div class="mb-3">
-      <button class="btn btn-success" routerLink="/products/add">Add Product</button>
-    </div>
-  }
+    <!-- Add Product Button (Admin Only) -->
+    <div class="top-container">
 
-  <!-- Search Bar -->
-  <div class="search-bar mb-4">
-    <input 
-      type="text" 
-      class="form-control" 
-      [(ngModel)]="searchQuery" 
-      (input)="searchProducts()" 
-      placeholder="Search for products..."
-    />
-    <img src="/search2.jpg" alt="Search" class="search-icon" />
+    @if (isAdmin) {
+      <div class="mb-3">
+        <button class="btn btn-success" routerLink="/products/add">Add Product</button>
+      </div>
+    }
+
+    <!-- Search Bar -->
+    <div class="search-bar mb-4">
+      <input 
+        type="text" 
+        class="form-control" 
+        [(ngModel)]="searchQuery" 
+        (input)="searchProducts()" 
+        placeholder="Search for products..."
+      />
+      <img src="/search2.jpg" alt="Search" class="search-icon" />
+    </div>
   </div>
 
 
