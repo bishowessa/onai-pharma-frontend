@@ -13,6 +13,13 @@ import { AdminGuard } from './guards/admin.guard';
 import { StockManagementComponent } from './stock-management/stock-management.component';
 import { ContactComponent } from './contact/contact.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
+import { Component } from '@angular/core';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
+import { ManageUsersComponent } from './manage-users/manage-users.component';
+import { PromoteUserComponent } from './promote-user/promote-user.component';
+import { EditUserComponent } from './edit-user/edit-user.component';
+import { HomeComponent } from './home/home.component';
+import { AboutComponent } from './about/about.component';
 export const routes: Routes = [
     {path: 'login', component: LoginComponent},
     {path: 'register', component: RegisterComponent},
@@ -26,7 +33,13 @@ export const routes: Routes = [
     {path: 'myorders', component: MyOrdersComponent },
     {path: 'contact', component: ContactComponent},
     {path: 'forgotPassword', component: ForgotPasswordComponent},
+    {path: 'reset-password', component: ResetPasswordComponent},
+    { path: 'manage-users', component: ManageUsersComponent, canActivate: [AdminGuard] },
+    {path: 'promote-user', component: PromoteUserComponent, canActivate: [AdminGuard]},
+    {path: 'edit-user/:id', component: EditUserComponent, canActivate: [AdminGuard]},
+    {path: 'home', component: HomeComponent},
+    {path: 'about', component: AboutComponent},
 
-    {path: '', redirectTo: 'products', pathMatch: 'full'},
-    {path: '**', redirectTo: 'products'},
+    {path: '', redirectTo: 'home', pathMatch: 'full'},
+    {path: '**', redirectTo: 'home'},
 ];

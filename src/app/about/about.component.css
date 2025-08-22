@@ -1,0 +1,61 @@
+.about-container {
+    padding: 40px 0;
+  }
+  
+  .who-we-are {
+    background: #f8f9fa;
+    padding: 50px 0;
+  }
+  
+  .who-we-are .text-section h2 {
+    color: #2c3e50;
+  }
+  
+  .who-we-are img {
+    max-width: 100%;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .vision-mission {
+    background: white;
+    padding: 50px 0;
+  }
+  
+  .vision-mission .card {
+    border: none;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .our-products {
+    background: #f8f9fa;
+    padding: 50px 0;
+  }
+  
+  .our-products .card {
+    text-align: center;
+    padding: 15px;
+    transition: transform 0.3s;
+  }
+  
+  .our-products .card:hover {
+    transform: translateY(-5px);
+  }
+  
+  .why-choose-us {
+    background: white;
+    padding: 50px 0;
+  }
+  
+  .why-choose-us ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .why-choose-us .list-group-item {
+    font-size: 1.2rem;
+    border: none;
+    padding: 10px 0;
+    background: none;
+  }
+  

@@ -35,7 +35,7 @@ export class AuthService {
     if (token) {
       this.http.get(`${this.apiUrl}/getCurrentUser`, { withCredentials: true }).subscribe(
         (response: any) => {
-          console.log('[DEBUG] User restored:', response);
+          // console.log('[DEBUG] User restored:', response);
           if (response.status === 'success' && response.data) {
             this.isLoggedIn.next(true);
             this.currentUser.next(response.data);
@@ -71,6 +71,23 @@ export class AuthService {
     );
   }
 
+  checkSession() {
+    this.http.get(`${this.apiUrl}/getCurrentUser`, { withCredentials: true }).subscribe(
+      (response: any) => {
+        if (response.status === 'success' && response.data) {
+          this.isLoggedIn.next(true);
+          this.currentUser.next(response.data);
+        } else {
+          this.isLoggedIn.next(false);
+          this.currentUser.next(null);
+        }
+      },
+      () => {
+        this.isLoggedIn.next(false);
+        this.currentUser.next(null);
+      }
+    );
+  }
   login(user: any) {
     this.http.post(`${this.apiUrl}/login`, user, { withCredentials: true }).subscribe(
       (response: any) => {
@@ -100,6 +117,7 @@ export class AuthService {
     );
   }
   
+
 
   logout() {
     this.http.post(`${this.apiUrl}/logout`, {}, { withCredentials: true }).subscribe(

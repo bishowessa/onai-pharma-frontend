@@ -1,0 +1,68 @@
+/* Center the success and error messages */
+.alert {
+  margin: 20px 0;
+  padding: 15px;
+  font-weight: bold;
+  text-align: center;
+  border-radius: 5px;
+}
+
+/* Table styling */
+.table {
+  border-collapse: separate;
+  border-spacing: 0 10px;
+  background-color: #f8f9fa;
+}
+
+th,
+td {
+  text-align: left;
+  padding: 10px;
+}
+
+th {
+  background-color: #007bff;
+  color: white;
+}
+
+td {
+  background-color: #ffffff;
+}
+
+.table-responsive {
+  margin-top: 20px;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Button Styling */
+.btn {
+  margin-right: 5px;
+}
+
+.btn-primary {
+  background-color: #007bff;
+  border-color: #007bff;
+}
+
+.btn-secondary {
+  background-color: #6c757d;
+}
+
+.btn-danger {
+  background-color: #dc3545;
+  border-color: #dc3545;
+}
+
+/* Ensure mobile responsiveness */
+@media (max-width: 768px) {
+  .table {
+    font-size: 14px;
+  }
+
+  .btn {
+    width: 100%;
+    margin: 5px 0;
+  }
+}

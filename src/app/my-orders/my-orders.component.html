@@ -1,65 +1,94 @@
-<div class="container mt-6">
-  <h1 class="text-center mb-4">My Orders</h1>
+<div class="all-container">
+  <div class="container">
+    <h1 class="text-center mb-4">My Orders</h1>
 
-  <div *ngIf="orders.length === 0">
-    <p>No orders, make your first order now!</p>
-  </div>
-
-  <button routerLink="/order" class="btn btn-primary">Make Order</button>
-
-  <div *ngIf="isAdmin">
-    <h3>Total Cash from Completed Orders: ${{ totalCash }}</h3>
-  </div>
-  
-  <!-- Pending Orders Section -->
-  <h2 *ngIf="orders.length > 0">Processing Orders:</h2>
-  <div *ngFor="let order of orders" class="order-card">
-    <h5>Order ID: {{ order._id }}</h5>
-    <p><strong>User:</strong> {{ order.user?.name || 'N/A' }}</p>
-    <p><strong>Phone:</strong> {{ order.user?.phone || 'N/A' }}</p>
-    <p><strong>Address:</strong> {{ order.user?.address || 'N/A' }}</p>
-    <p><strong>Total Price:</strong> {{ order.totalPrice }} EGP</p>
-    <p><strong>Products:</strong></p>
-
-    <div *ngFor="let product of order.products">
-      <p>{{ product.product.name }} (x{{ product.quantity }})</p>
+    <div *ngIf="orders.length === 0" class="empty-orders">
+      <p>No orders, make your first order now!</p>
     </div>
 
-    <button *ngIf="isAdmin" class="btn btn-success" (click)="markAsCompleted(order._id)">Mark as Completed</button>
-    <button class="btn btn-danger" (click)="cancelOrder(order._id)">Cancel Order</button>
-  </div>
+    <div class="order-actions text-center">
+      <button routerLink="/order" class="btn btn-primary">Make Order</button>
 
-  <!-- Completed Orders Section -->
-  <h2 *ngIf="completedOrders.length > 0">Completed Orders:</h2>
-  <div *ngFor="let order of completedOrders" class="order-card">
-    <h5>Order ID: {{ order._id }}</h5>
-    <p><strong>User:</strong> {{ order.user?.name || 'N/A' }}</p>
-    <p><strong>Phone:</strong> {{ order.user?.phone || 'N/A' }}</p>
-    <p><strong>Address:</strong> {{ order.user?.address || 'N/A' }}</p>
-    <p><strong>Total Price:</strong> {{ order.totalPrice }} EGP</p>
-    
-    <p><strong>Products:</strong></p>
-    <div *ngFor="let product of order.products">
-      <p>{{ product.product.name }} (x{{ product.quantity }})</p>
+      <div *ngIf="isAdmin" class="total-cash">
+        <h3>Total Cash from Completed Orders: ${{ totalCash }}</h3>
+      </div>
     </div>
 
-    <button *ngIf="isAdmin" class="btn btn-warning" (click)="restoreOrder(order._id)">Restore to Pending</button>
-  </div>
-
-  <!-- Canceled Orders Section -->
-  <h2 *ngIf="canceledOrders.length > 0">Canceled Orders:</h2>
-  <div *ngFor="let order of canceledOrders" class="order-card">
-    <h5>Order ID: {{ order._id }}</h5>
-    <p><strong>User:</strong> {{ order.user?.name || 'N/A' }}</p>
-    <p><strong>Phone:</strong> {{ order.user?.phone || 'N/A' }}</p>
-    <p><strong>Address:</strong> {{ order.user?.address || 'N/A' }}</p>
-    <p><strong>Total Price:</strong> {{ order.totalPrice }} EGP</p>
-    <p><strong>Products:</strong></p>
-    <div *ngFor="let product of order.products">
-      <p>{{ product.product.name }} (x{{ product.quantity }})</p>
+    <!-- Search Bar -->
+    <div class="search-bar">
+      <input 
+        type="text" 
+        class="form-control" 
+        [(ngModel)]="searchTerm" 
+        (input)="filterOrders()" 
+        placeholder="Search by Order ID, User, Phone, Address, Total Price, or Products..."
+      />
+      <img src="/search2.jpg" alt="Search" class="search-icon" />
     </div>
 
-    <button class="btn btn-warning" (click)="restoreOrder(order._id)">Restore to Pending</button>
-    <button *ngIf="isAdmin" class="btn btn-danger" (click)="deleteOrder(order._id)">Delete Order</button>
+    <!-- Pending Orders Section -->
+    <h2 *ngIf="filteredOrders.length > 0">Processing Orders:</h2>
+    <div class="orders-grid">
+      <div *ngFor="let order of filteredOrders" class="order-card">
+        <h5>Order ID: {{ order._id }}</h5>
+        <p><strong>User:</strong> {{ order.user?.name || 'N/A' }}</p>
+        <p><strong>Phone:</strong> {{ order.user?.phone || 'N/A' }}</p>
+        <p><strong>Address:</strong> {{ order.user?.address || 'N/A' }}</p>
+        <p><strong>Total Price:</strong> {{ order.totalPrice }} EGP</p>
+        <p><strong>Products:</strong></p>
+
+        <div class="products-list">
+          <p *ngFor="let product of order.products">{{ product.product.name }} (x{{ product.quantity }})</p>
+        </div>
+
+        <div class="order-buttons">
+          <button *ngIf="isAdmin" class="btn btn-success" (click)="markAsCompleted(order._id)">Mark as Completed</button>
+          <button class="btn btn-danger" (click)="cancelOrder(order._id)">Cancel Order</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Completed Orders Section -->
+    <h2 *ngIf="filteredCompletedOrders.length > 0">Completed Orders:</h2>
+    <div class="orders-grid">
+      <div *ngFor="let order of filteredCompletedOrders" class="order-card completed">
+        <h5>Order ID: {{ order._id }}</h5>
+        <p><strong>User:</strong> {{ order.user?.name || 'N/A' }}</p>
+        <p><strong>Phone:</strong> {{ order.user?.phone || 'N/A' }}</p>
+        <p><strong>Address:</strong> {{ order.user?.address || 'N/A' }}</p>
+        <p><strong>Total Price:</strong> {{ order.totalPrice }} EGP</p>
+
+        <p><strong>Products:</strong></p>
+        <div class="products-list">
+          <p *ngFor="let product of order.products">{{ product.product.name }} (x{{ product.quantity }})</p>
+        </div>
+
+        <div class="order-buttons">
+          <button *ngIf="isAdmin" class="btn btn-warning" (click)="restoreOrder(order._id)">Restore to Pending</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Canceled Orders Section -->
+    <h2 *ngIf="filteredCanceledOrders.length > 0">Canceled Orders:</h2>
+    <div class="orders-grid">
+      <div *ngFor="let order of filteredCanceledOrders" class="order-card canceled">
+        <h5>Order ID: {{ order._id }}</h5>
+        <p><strong>User:</strong> {{ order.user?.name || 'N/A' }}</p>
+        <p><strong>Phone:</strong> {{ order.user?.phone || 'N/A' }}</p>
+        <p><strong>Address:</strong> {{ order.user?.address || 'N/A' }}</p>
+        <p><strong>Total Price:</strong> {{ order.totalPrice }} EGP</p>
+
+        <p><strong>Products:</strong></p>
+        <div class="products-list">
+          <p *ngFor="let product of order.products">{{ product.product.name }} (x{{ product.quantity }})</p>
+        </div>
+
+        <div class="order-buttons">
+          <button class="btn btn-warning" (click)="restoreOrder(order._id)">Restore to Pending</button>
+          <button *ngIf="isAdmin" class="btn btn-danger" (click)="deleteOrder(order._id)">Delete Order</button>
+        </div>
+      </div>
+    </div>
   </div>
 </div>

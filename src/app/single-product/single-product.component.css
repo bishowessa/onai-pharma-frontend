@@ -21,7 +21,7 @@
   .product-image {
     width: 100%; /* Make it responsive width */
     height: 400px; /* Fixed height */
-    object-fit: fill; /* Ensure the image fills the space */
+    object-fit: contain; /* Ensure the image fills the space */
     border-radius: 8px;
     margin-bottom: 20px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);

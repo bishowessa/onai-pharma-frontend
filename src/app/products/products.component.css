@@ -111,6 +111,9 @@
   align-items: center;
 }
 
+.top-container{
+  margin-top: 40px;
+}
 /* Search bar container */
 .search-bar {
   position: relative;
@@ -122,9 +125,6 @@
   justify-content: flex-start; /* Aligns search bar to the left */
 }
 
-.top-container{
-  margin-top: 40px;
-}
 
 .search-bar input {
   flex: 1; /* Takes all available width */

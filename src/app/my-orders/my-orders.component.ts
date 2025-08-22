@@ -3,10 +3,11 @@ import { HttpClient } from '@angular/common/http';
 import { AuthService } from '../services/auth.service';
 import { NgFor, NgIf } from '@angular/common';
 import { RouterLink } from '@angular/router';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-my-orders',
-  imports: [NgFor, NgIf, RouterLink],
+  imports: [NgFor, NgIf, RouterLink,FormsModule],
   templateUrl: './my-orders.component.html',
   styleUrls: ['./my-orders.component.css']
 })
@@ -14,10 +15,14 @@ export class MyOrdersComponent implements OnInit {
   orders: any[] = [];
   completedOrders: any[] = [];
   canceledOrders: any[] = [];
+  filteredOrders: any[] = [];
+  filteredCompletedOrders: any[] = [];
+  filteredCanceledOrders: any[] = [];
   isAdmin = false;
   editingOrderId: string | null = null;
   productOptions: any[] = [];
-  totalCash: number = 0; // New property
+  totalCash: number = 0;
+  searchTerm: string = ''; // New property for search
 
   constructor(
     private http: HttpClient,
@@ -44,8 +49,9 @@ export class MyOrdersComponent implements OnInit {
         this.orders = response.data.filter((order: any) => order.status === 'Pending');
         this.completedOrders = response.data.filter((order: any) => order.status === 'Completed');
         this.canceledOrders = response.data.filter((order: any) => order.status === 'Cancelled');
-  
-        this.calculateTotalCash(); // Calculate total cash for completed orders
+
+        this.calculateTotalCash();
+        this.filterOrders(); // Apply initial filtering
 
         response.data.forEach((order: any) => {
           if (!order.user || !order.user.name || !order.user.phone || !order.user.address) {
@@ -94,12 +100,11 @@ export class MyOrdersComponent implements OnInit {
     }
   }
 
-  
   cancelOrder(orderId: string) {
     if (confirm('Are you sure you want to cancel this order?')) {
       this.http.patch(`http://localhost:5000/orders/${orderId}`, { status: 'Cancelled' }, { withCredentials: true })
         .subscribe(() => {
-          console.log(`Order ${orderId} canceled.`);
+          // console.log(`Order ${orderId} canceled.`);
           this.fetchOrders();
         }, error => console.error('Error canceling order:', error));
     }
@@ -109,10 +114,46 @@ export class MyOrdersComponent implements OnInit {
     if (confirm('Are you sure you want to delete this order? This action cannot be undone.')) {
       this.http.delete(`http://localhost:5000/orders/${orderId}`, { withCredentials: true })
         .subscribe(() => {
-          console.log(`Order ${orderId} deleted.`);
+          // console.log(`Order ${orderId} deleted.`);
           this.fetchOrders();
         }, error => console.error('Error deleting order:', error));
     }
   }
 
+  // Search function
+  filterOrders(): void {
+    // console.log('Search Term:', this.searchTerm);
+  
+    if (!this.searchTerm.trim()) {
+      this.filteredOrders = [...this.orders];
+      this.filteredCompletedOrders = [...this.completedOrders];
+      this.filteredCanceledOrders = [...this.canceledOrders];
+      // console.log('No search term, showing all orders.');
+      return;
+    }
+  
+    const searchLower = this.searchTerm.toLowerCase();
+  
+    const filterByCriteria = (order: any) => {
+      const productNames = order.products.map((p: any) => p.product?.name?.toLowerCase() || '').join(', ');
+  
+      return (
+        order._id.toLowerCase().includes(searchLower) ||
+        (order.user?.name?.toLowerCase().includes(searchLower) || '') ||
+        (order.user?.phone?.toLowerCase().includes(searchLower) || '') ||
+        (order.user?.address?.toLowerCase().includes(searchLower) || '') ||
+        (order.totalPrice?.toString().includes(searchLower) || '') ||
+        productNames.includes(searchLower)
+      );
+    };
+  
+    this.filteredOrders = this.orders.filter(filterByCriteria);
+    this.filteredCompletedOrders = this.completedOrders.filter(filterByCriteria);
+    this.filteredCanceledOrders = this.canceledOrders.filter(filterByCriteria);
+  
+    // console.log('Filtered Pending Orders:', this.filteredOrders);
+    // console.log('Filtered Completed Orders:', this.filteredCompletedOrders);
+    // console.log('Filtered Canceled Orders:', this.filteredCanceledOrders);
+  }
+  
 }

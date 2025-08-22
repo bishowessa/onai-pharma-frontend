@@ -1,0 +1,43 @@
+<h2 class="mt-5">Manage Users</h2>
+
+<!-- Success and Error Messages -->
+<div *ngIf="successMessage" class="alert alert-success" role="alert">
+  {{ successMessage }}
+</div>
+<div *ngIf="errorMessage" class="alert alert-danger" role="alert">
+  {{ errorMessage }}
+</div>
+
+<!-- Promote to Admin Button -->
+<button class="btn btn-primary mb-3" (click)="navigateToPromoteUser()">
+  Promote User to Admin
+</button>
+
+<!-- User List -->
+<div *ngIf="users.length > 0; else noUsers" class="table-responsive">
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Role</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let user of users">
+        <td>{{ user.name }}</td>
+        <td>{{ user.email }}</td>
+        <td>{{ user.role }}</td>
+        <td>
+          <button class="btn btn-secondary btn-sm" (click)="editUser(user._id)">Edit</button>
+          <button class="btn btn-danger btn-sm" (click)="deleteUser(user._id)">Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<ng-template #noUsers>
+  <p>No users found.</p>
+</ng-template>

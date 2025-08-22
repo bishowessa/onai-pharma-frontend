@@ -12,11 +12,12 @@ import { EditProductComponent } from './edit-product/edit-product.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { StockManagementComponent } from "./stock-management/stock-management.component";
 import { FooterComponent } from "./footer/footer.component";
+import { HomeComponent } from "./home/home.component";
 
 @Component({
   selector: 'app-root',
   imports: [RouterOutlet, RouterLink, NavbarComponent, LoginComponent, RegisterComponent,
-    ProductsComponent, ProfileComponent, AddProductComponent, DisplayProductComponent, EditProductComponent, ReactiveFormsModule, StockManagementComponent, FooterComponent],
+    ProductsComponent, ProfileComponent, AddProductComponent, DisplayProductComponent, EditProductComponent, ReactiveFormsModule, StockManagementComponent, FooterComponent, HomeComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
