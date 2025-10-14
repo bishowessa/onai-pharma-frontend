@@ -43,7 +43,7 @@ export class MyOrdersComponent implements OnInit {
   }
 
   fetchOrders() {
-    const url = this.isAdmin ? 'http://localhost:5000/orders' : 'http://localhost:5000/orders/my-orders';
+    const url = this.isAdmin ? 'https://onai-pharma-backend-2.onrender.com/orders' : 'https://onai-pharma-backend-2.onrender.com/orders/my-orders';
     this.http.get(url, { withCredentials: true }).subscribe((response: any) => {
       if (response?.status === 'success') {
         this.orders = response.data.filter((order: any) => order.status === 'Pending');
@@ -65,7 +65,7 @@ export class MyOrdersComponent implements OnInit {
   }
 
   fetchProductOptions() {
-    this.http.get('http://localhost:5000/products', { withCredentials: true }).subscribe((response: any) => {
+    this.http.get('https://onai-pharma-backend-2.onrender.com/products', { withCredentials: true }).subscribe((response: any) => {
       if (response?.status === 'success') {
         this.productOptions = response.data;
       }
@@ -80,7 +80,7 @@ export class MyOrdersComponent implements OnInit {
 
   markAsCompleted(orderId: string) {
     if (confirm('Are you sure you want to mark this order as completed?')) {
-      this.http.patch(`http://localhost:5000/orders/${orderId}`, { status: 'Completed' }, { withCredentials: true })
+      this.http.patch(`https://onai-pharma-backend-2.onrender.com/orders/${orderId}`, { status: 'Completed' }, { withCredentials: true })
         .subscribe(() => {
           this.fetchOrders();
         }, error => {
@@ -91,7 +91,7 @@ export class MyOrdersComponent implements OnInit {
 
   restoreOrder(orderId: string) {
     if (confirm('Are you sure you want to restore this order to pending status?')) {
-      this.http.patch(`http://localhost:5000/orders/${orderId}`, { status: 'Pending' }, { withCredentials: true })
+      this.http.patch(`https://onai-pharma-backend-2.onrender.com/orders/${orderId}`, { status: 'Pending' }, { withCredentials: true })
         .subscribe(() => {
           this.fetchOrders();
         }, error => {
@@ -102,7 +102,7 @@ export class MyOrdersComponent implements OnInit {
 
   cancelOrder(orderId: string) {
     if (confirm('Are you sure you want to cancel this order?')) {
-      this.http.patch(`http://localhost:5000/orders/${orderId}`, { status: 'Cancelled' }, { withCredentials: true })
+      this.http.patch(`https://onai-pharma-backend-2.onrender.com/orders/${orderId}`, { status: 'Cancelled' }, { withCredentials: true })
         .subscribe(() => {
           // console.log(`Order ${orderId} canceled.`);
           this.fetchOrders();
@@ -112,7 +112,7 @@ export class MyOrdersComponent implements OnInit {
 
   deleteOrder(orderId: string) {
     if (confirm('Are you sure you want to delete this order? This action cannot be undone.')) {
-      this.http.delete(`http://localhost:5000/orders/${orderId}`, { withCredentials: true })
+      this.http.delete(`https://onai-pharma-backend-2.onrender.com/orders/${orderId}`, { withCredentials: true })
         .subscribe(() => {
           // console.log(`Order ${orderId} deleted.`);
           this.fetchOrders();

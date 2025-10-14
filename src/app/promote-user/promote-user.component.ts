@@ -25,13 +25,13 @@ export class PromoteUserComponent {
 
     // Check if user exists in the backend
     console.log(`Checking email: ${this.email}`);
-    this.http.get<any>(`http://localhost:5000/users/checkEmail/${this.email}`).subscribe({
+    this.http.get<any>(`https://onai-pharma-backend-2.onrender.com/users/checkEmail/${this.email}`).subscribe({
       next: (response) => {
         if (response.exists) {
           // Promote the user
           const userId = response.user._id;
           this.http.patch(
-            `http://localhost:5000/users/promote/${userId}`,
+            `https://onai-pharma-backend-2.onrender.com/users/promote/${userId}`,
             {},
             { withCredentials: true } // Ensure cookies or tokens are sent
           ).subscribe({

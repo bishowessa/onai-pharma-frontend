@@ -32,7 +32,7 @@ export class ContactComponent {
     }
 
     // Example endpoint for sending contact messages
-    this.http.post('http://localhost:5000/contact', this.contactForm.value).subscribe(
+    this.http.post('https://onai-pharma-backend-2.onrender.com/contact', this.contactForm.value).subscribe(
       () => {
         this.successMessage = 'Your message has been sent successfully!';
         setTimeout(() => (this.successMessage = ''), 3000);

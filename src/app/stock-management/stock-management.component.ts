@@ -43,7 +43,7 @@ export class StockManagementComponent implements OnInit {
   fetchProducts(): void {
     // Note: We do not add custom headers here since withCredentials will send cookies.
     this.http
-      .get('http://localhost:5000/products', { withCredentials: true })
+      .get('https://onai-pharma-backend-2.onrender.com/products', { withCredentials: true })
       .subscribe(
         (res: any) => {
           if (res && res.data) {
@@ -82,7 +82,7 @@ export class StockManagementComponent implements OnInit {
         additionalStock: Number(additionalStock),
       };
 
-      const url = `http://localhost:5000/products/addStock/${productId}`;
+      const url = `https://onai-pharma-backend-2.onrender.com/products/addStock/${productId}`;
 
       this.http
         .patch(url, stockData, { withCredentials: true })

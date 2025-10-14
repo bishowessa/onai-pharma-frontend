@@ -37,7 +37,7 @@ export class OrderComponent implements OnInit {
       this.initializeForm(user);
     });
 
-    this.http.get('http://localhost:5000/products').subscribe(
+    this.http.get('https://onai-pharma-backend-2.onrender.com/products').subscribe(
       (response: any) => {
         this.products = response.data;
         if (selectedProductId) {
@@ -149,7 +149,7 @@ export class OrderComponent implements OnInit {
       }))
     };
 
-    this.http.post('http://localhost:5000/orders', orderData, { withCredentials: true })
+    this.http.post('https://onai-pharma-backend-2.onrender.com/orders', orderData, { withCredentials: true })
       .subscribe(
         response => {
           this.successMessage = 'Order placed successfully! You will be contacted soon.';

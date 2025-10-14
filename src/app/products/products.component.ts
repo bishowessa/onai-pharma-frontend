@@ -28,7 +28,7 @@ export class ProductsComponent implements OnInit {
   }
 
   fetchProducts() {
-    this.http.get('http://localhost:5000/products').subscribe(
+    this.http.get('https://onai-pharma-backend-2.onrender.com/products').subscribe(
       (response: any) => {
         if (response?.status === 'success' && Array.isArray(response.data)) {
           this.products = response.data;
@@ -59,7 +59,7 @@ export class ProductsComponent implements OnInit {
 
   deleteProduct(productId: string) {
     if (confirm('Are you sure you want to delete this product?')) {
-      this.http.delete(`http://localhost:5000/products/${productId}`, { withCredentials: true }).subscribe(
+      this.http.delete(`https://onai-pharma-backend-2.onrender.com/products/${productId}`, { withCredentials: true }).subscribe(
         () => {
           console.log('Product deleted successfully');
           this.fetchProducts();

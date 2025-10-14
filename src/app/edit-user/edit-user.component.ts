@@ -36,7 +36,7 @@ export class EditUserComponent implements OnInit {
   getUser(userId: string): void {
     console.log(`Fetching user data for ID: ${userId}`);
     this.http
-      .get<any>(`http://localhost:5000/users/singleUser/${userId}`, {
+      .get<any>(`https://onai-pharma-backend-2.onrender.com/users/singleUser/${userId}`, {
         withCredentials: true,
       })
       .subscribe(
@@ -55,7 +55,7 @@ export class EditUserComponent implements OnInit {
     console.log('Updating user data:', this.user);
     this.http
       .patch(
-        `http://localhost:5000/users/updateuser/${this.user.email}`,
+        `https://onai-pharma-backend-2.onrender.com/users/updateuser/${this.user.email}`,
         this.user,
         {
           withCredentials: true,

@@ -11,7 +11,7 @@ import { throwError } from 'rxjs';
   providedIn: 'root'
 })
 export class AuthService {
-  private apiUrl = 'http://localhost:5000/users';
+  private apiUrl = 'https://onai-pharma-backend-2.onrender.com/users';
   isLoggedIn = new BehaviorSubject<boolean>(false);
   currentUser = new BehaviorSubject<any>(null);
 

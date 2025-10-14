@@ -7,7 +7,7 @@ import { AuthService } from './auth.service';
   providedIn: 'root',
 })
 export class ProductService {
-  private apiUrl = 'http://localhost:5000/products';
+  private apiUrl = 'https://onai-pharma-backend-2.onrender.com/products';
 
   constructor(private http: HttpClient, private authService: AuthService) {}
 
@@ -42,17 +42,17 @@ export class ProductService {
 
   createOrder(orderData: any) {
     console.log('POST request to create order:', orderData);
-    return this.http.post('http://localhost:5000/orders', orderData, {
+    return this.http.post('https://onai-pharma-backend-2.onrender.com/orders', orderData, {
       headers: this.getAuthHeaders(),
     });
   }
 
   getProductsByStock(headers: HttpHeaders) {
-    return this.http.get('http://localhost:5000/products', { headers });
+    return this.http.get('https://onai-pharma-backend-2.onrender.com/products', { headers });
   }
 
   updateProductStock(productId: string, newStock: number, headers: HttpHeaders) {
-    return this.http.patch(`http://localhost:5000/products/${productId}`, { stock: newStock }, { headers });
+    return this.http.patch(`https://onai-pharma-backend-2.onrender.com/products/${productId}`, { stock: newStock }, { headers });
   }
 
   addStockToProduct(productId: string, formData: FormData, headers: HttpHeaders): Observable<any> {

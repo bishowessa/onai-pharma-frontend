@@ -24,7 +24,7 @@ export class ForgotPasswordComponent {
       return;
     }
   
-    this.http.post('http://localhost:5000/users/forgotPassword', 
+    this.http.post('https://onai-pharma-backend-2.onrender.com/users/forgotPassword', 
       { email }, 
       { headers: { 'Content-Type': 'application/json' }, withCredentials: true }
     ).subscribe(

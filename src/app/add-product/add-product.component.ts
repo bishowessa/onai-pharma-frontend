@@ -68,7 +68,7 @@ export class AddProductComponent {
     console.log('[DEBUG] Request headers:', headers);  // Log the request headers
 
     // Send the request to the backend
-    this.http.post('http://localhost:5000/products', formData, { headers, withCredentials: true }).subscribe(
+    this.http.post('https://onai-pharma-backend-2.onrender.com/products', formData, { headers, withCredentials: true }).subscribe(
       (response) => {
         console.log('[DEBUG] Product added successfully:', response);
         this.router.navigate(['/products']); // Navigate back to the product list

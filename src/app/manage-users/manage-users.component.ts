@@ -23,7 +23,7 @@ export class ManageUsersComponent implements OnInit {
 
   getUsers(): void {
     this.http
-      .get<any>('http://localhost:5000/users/', { withCredentials: true })
+      .get<any>('https://onai-pharma-backend-2.onrender.com/users/', { withCredentials: true })
       .subscribe(
         (response) => {
           this.users = response.data;
@@ -41,7 +41,7 @@ export class ManageUsersComponent implements OnInit {
   deleteUser(userId: string): void {
     if (confirm('Are you sure you want to delete this user?')) {
       this.http
-        .delete(`http://localhost:5000/users/deleteuser/${userId}`, { withCredentials: true })
+        .delete(`https://onai-pharma-backend-2.onrender.com/users/deleteuser/${userId}`, { withCredentials: true })
         .subscribe(
           (response) => {
             this.setSuccessMessage('User deleted successfully.');

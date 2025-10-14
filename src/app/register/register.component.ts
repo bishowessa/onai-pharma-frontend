@@ -31,7 +31,7 @@ export class RegisterComponent implements OnInit {
 
     console.log('User Data:', user);
 
-    this.http.post('http://localhost:5000/users/register', user)
+    this.http.post('https://onai-pharma-backend-2.onrender.com/users/register', user)
       .subscribe(
         (response: any) => {
           console.log('Response:', response);

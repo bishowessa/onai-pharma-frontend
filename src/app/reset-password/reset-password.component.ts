@@ -26,7 +26,7 @@ export class ResetPasswordComponent implements OnInit {
     this.token = urlParams.get('token');
 
     if (this.token) {
-      this.http.post('http://localhost:5000/users/get-token-email', { token: this.token })
+      this.http.post('https://onai-pharma-backend-2.onrender.com/users/get-token-email', { token: this.token })
         .subscribe(
           (response: any) => {
             this.email = response.email;
@@ -57,7 +57,7 @@ export class ResetPasswordComponent implements OnInit {
       return;
     }
 
-    this.http.post('http://localhost:5000/users/reset-password', {
+    this.http.post('https://onai-pharma-backend-2.onrender.com/users/reset-password', {
       token: this.token,
       newPassword: this.newPassword
     }).subscribe(

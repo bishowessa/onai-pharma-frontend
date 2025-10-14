@@ -43,7 +43,7 @@ export class EditProductComponent implements OnInit {
   }
 
   fetchProductDetails(): void {
-    this.http.get(`http://localhost:5000/products/${this.productId}`).subscribe(
+    this.http.get(`https://onai-pharma-backend-2.onrender.com/products/${this.productId}`).subscribe(
       (response: any) => {
         if (response?.status === 'success' && response.data) {
           const product = response.data;
@@ -93,7 +93,7 @@ export class EditProductComponent implements OnInit {
     }
 
     this.http
-      .patch(`http://localhost:5000/products/${this.productId}`, formData, {
+      .patch(`https://onai-pharma-backend-2.onrender.com/products/${this.productId}`, formData, {
         withCredentials: true
       })
       .subscribe(
