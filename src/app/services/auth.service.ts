@@ -23,19 +23,19 @@ export class AuthService {
 
   getToken() {
     const token = this.cookieService.get('jwt');
-    console.log('[DEBUG] Checking JWT from Cookies:', token);
+    
     return token;  // Ensure the token is returned
   }
   
   /** 🔹 Restore Login State on Refresh */
   public restoreSession() {
     const token = this.cookieService.get('jwt');
-    // console.log('[DEBUG] Checking JWT from Cookies:', token);
+    // 
 
     if (token) {
       this.http.get(`${this.apiUrl}/getCurrentUser`, { withCredentials: true }).subscribe(
         (response: any) => {
-          // console.log('[DEBUG] User restored:', response);
+          // 
           if (response.status === 'success' && response.data) {
             this.isLoggedIn.next(true);
             this.currentUser.next(response.data);
@@ -91,7 +91,7 @@ export class AuthService {
   login(user: any) {
     this.http.post(`${this.apiUrl}/login`, user, { withCredentials: true }).subscribe(
       (response: any) => {
-  //      console.log('[DEBUG] Login success:', response);
+  //      
   
         // Set the token in the cookie with path and expires
         const expirationDate = new Date();
@@ -101,7 +101,7 @@ export class AuthService {
         // Fetch user details after login
         this.fetchProfile().subscribe(
           (userResponse: any) => {
-          //  console.log('[DEBUG] Fetched user after login:', userResponse);
+          //  
             this.isLoggedIn.next(true);
             this.currentUser.next(userResponse.data);
             this.router.navigate(['/products']);
@@ -122,7 +122,7 @@ export class AuthService {
   logout() {
     this.http.post(`${this.apiUrl}/logout`, {}, { withCredentials: true }).subscribe(
       () => {
-        console.log('[DEBUG] Logout successful');
+        
         // Delete the jwt cookie on logout
         this.cookieService.delete('jwt', '/');
         this.isLoggedIn.next(false);
@@ -137,7 +137,7 @@ export class AuthService {
 
   updateProfile(updatedUser: any) {
     const token = this.getToken();
-    console.log('[DEBUG] Sending JWT token:', token);
+    
   
     return this.http.patch(`${this.apiUrl}/updateCurrentUser`, updatedUser, { withCredentials: true }).pipe(
       tap((response: any) => {

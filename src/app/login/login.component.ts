@@ -29,11 +29,11 @@ fetchData(e: Event) {
     password: formData.get('password') as string
   };
 
-  console.log('login success');
+  
 
   this.http.post('https://onai-pharma-backend-2.onrender.com/users/login', user,{withCredentials: true})
     .subscribe((response : any) => {
-     // console.log('Response:', response);
+     // 
       this.successMessage= response.message;
 
       setTimeout(() => {

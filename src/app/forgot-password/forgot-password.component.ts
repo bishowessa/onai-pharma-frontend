@@ -17,7 +17,7 @@ export class ForgotPasswordComponent {
   http = inject(HttpClient);
 
   sendResetLink(email: string) {
-    console.log("Sending email:", email); // Debugging line
+     // Debugging line
   
     if (!email.trim()) {
       this.errorMessage = "Please enter a valid email.";
@@ -29,12 +29,12 @@ export class ForgotPasswordComponent {
       { headers: { 'Content-Type': 'application/json' }, withCredentials: true }
     ).subscribe(
       (response: any) => {
-        console.log("Success response:", response);
+        
         this.successMessage = response.message;
         this.errorMessage = null;
       },
       (error: any) => {
-        console.log("Error response:", error);
+        
         this.errorMessage = error.error.data || 'An error occurred';
         this.successMessage = null;
       }

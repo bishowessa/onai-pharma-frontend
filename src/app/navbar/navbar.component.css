@@ -1,163 +1,124 @@
 /* Styling for the navbar */
 .navbar {
-    height: 70px;
-    width: 100vw;
-    background-color: white;
-    border-bottom: 1px solid #ddd; /* Light border */
-    overflow: hidden;
-    position: fixed;
-    top: 0;
-    
+  height: 70px;
+  background-color: white;
+  border-bottom: 1px solid #ddd;
+  padding: 0.5rem 1rem;
 }
 
-/* Logo styling */
 .navbar-brand img {
-    margin-left: 10px;
-    height: 60px;
+  height: 40px;
 }
 
-/* Navbar items spacing */
-.navbar-nav .nav-item {
-    padding: 10px;
-}
-
-/* Link styling */
 .nav-link {
-    font-size: 17px;
-    font-weight: 500;
-    color: #333; /* Dark text color */
-    transition: all 0.3s ease; /* Smooth transition */
+  font-size: 17px;
+  font-weight: 500;
+  color: #333;
+  transition: color 0.3s ease;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
 }
 
-/* Center the buttons */
-.navbar-nav.mx-auto {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.nav-link:hover, .nav-link.active {
+  background-color: #f0f0f0;
+  color: #007bff;
 }
 
-/* Hover effects for the links */
-.nav-link:hover {
-    background-color: #609bdb;
-    border: solid 1px black;
-    text-decoration: none;
+/* Add spacing between action items on desktop */
+.navbar-actions .navbar-nav > .nav-item {
+  margin-left: 10px;
 }
 
-/* Login button styling */
-.nav-link.btn {
-    background-color: green;
-    border-radius: 4px;
-    padding: 8px 16px;
-    font-size: 16px;
+.btn-danger{
+    margin-left:10px;
 }
 
-.nav-link.btn:hover {
-    background-color: rgb(48, 203, 48); /* Darker green on hover */
+/* Style for the green Login button */
+.navbar-actions .btn-primary {
+  background-color: #28a745; /* Bootstrap's success green */
+  border-color: #28a745;
+  color: white !important; /* Ensure text is white */
 }
 
-  /* Dropdown container */
-  .profile-dropdown {
-    position: absolute;
-    top: 100%; /* Position it right below the profile button */
+.navbar-actions .btn-primary:hover {
+  background-color: #218838; /* A darker green for hover */
+  border-color: #1e7e34;
+}
+
+
+/* --- Mobile & Tablet Responsiveness --- */
+/* This breakpoint is controlled by the 'navbar-expand-lg' class in the HTML.
+   Below this width, the toggler appears. */
+@media (max-width: 991.98px) {
+  /* When the mobile menu is open, style it as a sidebar from the right */
+  .navbar-collapse.show {
+    position: fixed; /* Changed from absolute to fixed */
+    top: 70px;
     right: 0;
-    background-color: white;
-    border-radius: 5px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    width: 220px; /* Adjust width as needed */
-    padding: 10px;
-    z-index: 9999; /* Ensure it's above other elements */
-    display: block;
-    animation: fadeIn 0.2s ease-out; /* Optional fade-in effect */
-  }
-  
-  /* Dropdown content */
-  .profile-dropdown .dropdown-menu {
+    width: 280px;
+    height: calc(100vh - 70px);
+    padding: 20px;
+    background-color: #f8f9fa;
+    border-left: 1px solid #ddd;
     display: flex;
     flex-direction: column;
+    align-items: flex-start;
+    box-shadow: -2px 0 5px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease-in-out; /* Add a smooth slide-in animation */
+    transform: translateX(0);
   }
-  
-  .profile-dropdown p {
-    margin: 8px 0;
-    font-size: 14px;
-    color: #333;
+
+  /* When collapsed, hide it off-screen */
+  .navbar-collapse.collapse:not(.show) {
+      transform: translateX(100%);
+      display: block; /* Keep it in the DOM for animations */
+      visibility: hidden;
   }
-  
-  .profile-dropdown button {
-    margin-top: 10px;
+
+  /* Reset flexbox for a vertical layout inside the sidebar */
+  .navbar-nav, .navbar-actions, .navbar-actions .navbar-nav {
+    flex-direction: column;
     width: 100%;
-    background-color: #dc3545; /* Bootstrap's btn-danger color */
-    color: white;
-    border: none;
-    border-radius: 5px;
-    padding: 8px;
-    cursor: pointer;
+    align-items: stretch;
   }
   
-  .profile-dropdown button:hover {
-    background-color: #c82333;
+  /* Reset the margin for mobile view */
+  .navbar-actions .navbar-nav > .nav-item {
+    margin-left: 0;
+  }
+
+  /* Spacing for all items in the collapsed menu */
+  .navbar-nav .nav-item {
+    margin-bottom: 10px;
+    width: 100%;
+    text-align: left;
   }
   
-  /* Optional: Add fade-in animation for dropdown */
-  @keyframes fadeIn {
-    from {
-      opacity: 0;
-    }
-    to {
-      opacity: 1;
-    }
+  .navbar-actions .nav-item .btn,
+  .navbar-actions .nav-item .btn-link {
+      width: 100%;
+      margin-bottom: 10px;
+  }
+
+  .profile-buttons {
+      display: flex;
+      flex-direction: column;
   }
   
+  .profile-buttons .btn {
+      width: 100%;
+  }
 
-/* Make sure the navbar links are always visible, even on small screens */
-@media screen and (max-width: 991px) {
-    /* Ensure the navbar links are not hidden and are displayed inline */
-    .navbar-collapse {
-        display: block !important;
-    }
+  .profile-buttons .btn:first-child {
+      margin-bottom: 10px;
+  }
 
-    .navbar-nav {
-        flex-direction: row;
-        justify-content: center;
-    }
+  /* Override the centering for the main nav links in mobile view */
+  .navbar-collapse .mx-auto {
+      margin-left: 0 !important;
+      margin-right: 0 !important;
+  }
 
-    .navbar-nav .nav-item {
-        padding: 5px;
-    }
 
-    .navbar-nav.mx-auto {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-
-    .nav-link {
-        font-size: 16px;
-        padding: 8px 12px;
-    }
-
-    /* Remove the navbar-toggler button */
-    .navbar-toggler {
-        display: none;
-    }
-
-    /* Adjust the login button */
-    .navbar-nav .nav-item:last-child {
-        margin-left: auto;
-    }
 }
 
-/* For extra small screens (phones in portrait mode) */
-@media screen and (max-width: 576px) {
-    .nav-link {
-        font-size: 14px;
-    }
-
-    .navbar-nav .nav-item {
-        padding: 8px 0;
-    }
-
-    /* Ensure login button stays aligned */
-    .navbar-nav .nav-item:last-child {
-        margin-left: auto;
-    }
-}

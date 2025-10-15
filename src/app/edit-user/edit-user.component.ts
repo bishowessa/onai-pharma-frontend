@@ -34,14 +34,14 @@ export class EditUserComponent implements OnInit {
   }
 
   getUser(userId: string): void {
-    console.log(`Fetching user data for ID: ${userId}`);
+    
     this.http
       .get<any>(`https://onai-pharma-backend-2.onrender.com/users/singleUser/${userId}`, {
         withCredentials: true,
       })
       .subscribe(
         (response) => {
-          console.log('User data fetched successfully:', response);
+          
           this.user = response.data; // Prefill form with user data
         },
         (error) => {
@@ -52,7 +52,7 @@ export class EditUserComponent implements OnInit {
   }
 
   updateUser(): void {
-    console.log('Updating user data:', this.user);
+    
     this.http
       .patch(
         `https://onai-pharma-backend-2.onrender.com/users/updateuser/${this.user.email}`,
@@ -63,7 +63,7 @@ export class EditUserComponent implements OnInit {
       )
       .subscribe(
         (response) => {
-          console.log('User updated successfully:', response);
+          
           this.setSuccessMessage('User updated successfully.');
           setTimeout(() => this.router.navigate(['/manage-users']), 3000);
         },

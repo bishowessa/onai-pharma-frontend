@@ -61,7 +61,7 @@ export class ProductsComponent implements OnInit {
     if (confirm('Are you sure you want to delete this product?')) {
       this.http.delete(`https://onai-pharma-backend-2.onrender.com/products/${productId}`, { withCredentials: true }).subscribe(
         () => {
-          console.log('Product deleted successfully');
+          
           this.fetchProducts();
         },
         (error) => {

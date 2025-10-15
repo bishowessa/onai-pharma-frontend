@@ -29,12 +29,12 @@ export class RegisterComponent implements OnInit {
       address: formData.get('address') as string
     };
 
-    console.log('User Data:', user);
+    
 
     this.http.post('https://onai-pharma-backend-2.onrender.com/users/register', user)
       .subscribe(
         (response: any) => {
-          console.log('Response:', response);
+          
           this.successMessage = 'Registration successful! Redirecting to login...';
           setTimeout(() => {
             this.successMessage = null;

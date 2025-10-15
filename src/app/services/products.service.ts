@@ -20,28 +20,28 @@ export class ProductService {
   }
 
   getProducts(): Observable<any> {
-    console.log('GET request to fetch all products');
+    
     return this.http.get<any>(`${this.apiUrl}`, {
       headers: this.getAuthHeaders(),
     });
   }
 
   getProduct(id: string): Observable<any> {
-    console.log(`GET request to fetch product with ID: ${id}`);
+    
     return this.http.get(`${this.apiUrl}/${id}`, {
       headers: this.getAuthHeaders(),
     });
   }
 
   deleteProduct(id: string): Observable<any> {
-    console.log(`DELETE request to delete product with ID: ${id}`);
+    
     return this.http.delete<any>(`${this.apiUrl}/${id}`, {
       headers: this.getAuthHeaders(),
     });
   }
 
   createOrder(orderData: any) {
-    console.log('POST request to create order:', orderData);
+    
     return this.http.post('https://onai-pharma-backend-2.onrender.com/orders', orderData, {
       headers: this.getAuthHeaders(),
     });
@@ -63,7 +63,7 @@ export class ProductService {
 
 
   searchProductsByName(searchTerm: string): Observable<any[]> {
-    console.log(`GET request to search products by name: ${searchTerm}`);
+    
     return this.http.get<any[]>(`${this.apiUrl}/search?name=${searchTerm}`, {
       headers: this.getAuthHeaders(),
     });

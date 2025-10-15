@@ -104,7 +104,7 @@ export class MyOrdersComponent implements OnInit {
     if (confirm('Are you sure you want to cancel this order?')) {
       this.http.patch(`https://onai-pharma-backend-2.onrender.com/orders/${orderId}`, { status: 'Cancelled' }, { withCredentials: true })
         .subscribe(() => {
-          // console.log(`Order ${orderId} canceled.`);
+          // 
           this.fetchOrders();
         }, error => console.error('Error canceling order:', error));
     }
@@ -114,7 +114,7 @@ export class MyOrdersComponent implements OnInit {
     if (confirm('Are you sure you want to delete this order? This action cannot be undone.')) {
       this.http.delete(`https://onai-pharma-backend-2.onrender.com/orders/${orderId}`, { withCredentials: true })
         .subscribe(() => {
-          // console.log(`Order ${orderId} deleted.`);
+          // 
           this.fetchOrders();
         }, error => console.error('Error deleting order:', error));
     }
@@ -122,13 +122,13 @@ export class MyOrdersComponent implements OnInit {
 
   // Search function
   filterOrders(): void {
-    // console.log('Search Term:', this.searchTerm);
+    // 
   
     if (!this.searchTerm.trim()) {
       this.filteredOrders = [...this.orders];
       this.filteredCompletedOrders = [...this.completedOrders];
       this.filteredCanceledOrders = [...this.canceledOrders];
-      // console.log('No search term, showing all orders.');
+      // 
       return;
     }
   
@@ -151,9 +151,9 @@ export class MyOrdersComponent implements OnInit {
     this.filteredCompletedOrders = this.completedOrders.filter(filterByCriteria);
     this.filteredCanceledOrders = this.canceledOrders.filter(filterByCriteria);
   
-    // console.log('Filtered Pending Orders:', this.filteredOrders);
-    // console.log('Filtered Completed Orders:', this.filteredCompletedOrders);
-    // console.log('Filtered Canceled Orders:', this.filteredCanceledOrders);
+    // 
+    // 
+    // 
   }
   
 }

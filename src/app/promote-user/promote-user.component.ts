@@ -24,7 +24,7 @@ export class PromoteUserComponent {
     }
 
     // Check if user exists in the backend
-    console.log(`Checking email: ${this.email}`);
+    
     this.http.get<any>(`https://onai-pharma-backend-2.onrender.com/users/checkEmail/${this.email}`).subscribe({
       next: (response) => {
         if (response.exists) {

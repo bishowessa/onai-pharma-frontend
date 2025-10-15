@@ -36,7 +36,7 @@ export class AddProductComponent {
     const selectedImage = event.target.files[0];
     if (selectedImage) {
       this.image = selectedImage;
-      console.log('[DEBUG] Selected Image:', selectedImage);  // Log the image to debug
+        // Log the image to debug
     }
   }
 
@@ -50,12 +50,12 @@ export class AddProductComponent {
     // Append the image with its file name
     if (this.image) {
       formData.append('image', this.image, this.image.name); // Include file name to the upload
-      console.log('[DEBUG] Image added to formData:', this.image.name);  // Debug the image name
+        // Debug the image name
     }
 
     // Get the JWT token from the AuthService
     const token = this.authService.getToken();
-    console.log('[DEBUG] Token:', token);  // Log the token to ensure it's present
+      // Log the token to ensure it's present
 
     // Check if token is present and valid
     // if (!token) {
@@ -65,17 +65,17 @@ export class AddProductComponent {
 
     // Set the authorization header
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    console.log('[DEBUG] Request headers:', headers);  // Log the request headers
+      // Log the request headers
 
     // Send the request to the backend
     this.http.post('https://onai-pharma-backend-2.onrender.com/products', formData, { headers, withCredentials: true }).subscribe(
       (response) => {
-        console.log('[DEBUG] Product added successfully:', response);
+        
         this.router.navigate(['/products']); // Navigate back to the product list
       },
       (error) => {
         console.error('[ERROR] Failed to add product:', error);
-        console.log('[ERROR] Error response:', error.error); // Log the detailed error response from the backend
+         // Log the detailed error response from the backend
       }
     );
   }

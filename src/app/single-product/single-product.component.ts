@@ -36,16 +36,16 @@ export class SingleProductComponent implements OnInit {
    }
 
    checkAdminStatus() {
-    // console.log('Checking admin status...');
+    // 
     this.authService.currentUser.subscribe(user => {
-      // console.log('Current user:', user);
+      // 
       this.isAdmin = user?.role === 'admin';
-      console.log('Is admin:', this.isAdmin);
+      
     });
   }
 
   navigateToOrder(productId: string) {
-    // console.log('Navigating to order for product ID:', productId);
+    // 
     this.router.navigate(['/order', productId]);
   }
 
