@@ -13,7 +13,7 @@ import { FooterComponent } from "./footer/footer.component";
   styleUrl: './app.component.css'
 })
 export class AppComponent implements OnInit {
-  title = 'onai-pharmaceutical-frontend';
+  title = 'onai pharma';
 
   constructor(private authService: AuthService) {}
 
