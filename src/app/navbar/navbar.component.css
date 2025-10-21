@@ -24,6 +24,22 @@
   color: #007bff;
 }
 
+/* ... existing css rules ... */
+
+/* ADD THESE NEW STYLES for the admin buttons */
+.navbar-actions .btn-admin {
+  background-color: #6f42c1; /* A nice purple color */
+  border-color: #6f42c1;
+  color: white !important; /* Ensure text is white */
+}
+
+.navbar-actions .btn-admin:hover {
+  background-color: #5a349c; /* A darker purple for hover */
+  border-color: #5a349c;
+}
+
+/* --- Mobile & Tablet Responsiveness --- */
+/* ... existing media query ... */
 /* Add spacing between action items on desktop */
 .navbar-actions .navbar-nav > .nav-item {
   margin-left: 10px;

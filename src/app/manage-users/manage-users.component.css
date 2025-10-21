@@ -1,4 +1,8 @@
 /* Center the success and error messages */
+*{
+  margin-top: 90px;
+}
+
 .alert {
   margin: 20px 0;
   padding: 15px;

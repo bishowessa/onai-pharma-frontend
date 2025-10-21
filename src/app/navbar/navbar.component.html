@@ -43,11 +43,9 @@
             </li>
             @if (isAdmin) {
                 <li class="nav-item">
-                    <a class="btn btn-info text-black" routerLink="/products/stock" (click)="closeNavbar()">Stock</a>
-                </li>
+                    <a class="btn btn-admin text-black" routerLink="/products/stock" (click)="closeNavbar()">Stock</a>
                 <li class="nav-item">
-                    <a class="btn btn-info text-black" routerLink="/manage-users" (click)="closeNavbar()">Manage Users</a>
-                </li>
+                  <a class="btn btn-admin text-black" routerLink="/manage-users" (click)="closeNavbar()">Manage Users</a>                </li>
             }
           }
 

@@ -9,7 +9,7 @@
         <select id="product" class="form-control" formControlName="product">
           <option value="" disabled>Select a product</option>
           <option *ngFor="let product of products" [value]="product._id">
-            {{ product.name }} - ${{ product.price }}
+            {{ product.name }} - {{ product.price }} EGP
           </option>
         </select>
         <div *ngIf="orderForm.get('product')?.touched && orderForm.get('product')?.invalid" class="error-message">
