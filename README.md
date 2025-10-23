@@ -12,6 +12,38 @@ ng serve
 
 Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
 
+## Docker
+
+### Development
+
+To build the development image (e.g., when dependencies change):
+
+```bash
+docker build -t onai-pharma-frontend:dev -f Dockerfile.dev .
+```
+
+To run the development container with live editing:
+
+```bash
+docker run -p 4200:4200 -v .:/app -v /app/node_modules onai-pharma-frontend:dev
+```
+
+### Production
+
+To build the production image:
+
+```bash
+docker build -t onai-pharma-frontend -f Dockerfile .
+```
+
+### Docker Compose
+
+To start the application with Docker Compose:
+
+```bash
+docker compose up
+```
+
 ## Code scaffolding
 
 Angular CLI includes powerful code scaffolding tools. To generate a new component, run:

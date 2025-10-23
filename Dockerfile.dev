@@ -1,0 +1,9 @@
+FROM node:18-alpine
+WORKDIR /app
+COPY package*.json ./
+RUN npm install
+COPY . .
+EXPOSE 4200
+# The "--" is important to pass the --host argument to the ng serve command
+# The "--poll" flag enables polling for file changes, which is necessary for hot-reloading to work with Docker volumes
+CMD ["npm", "start", "--", "--host", "0.0.0.0", "--poll", "1000"]
