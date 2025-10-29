@@ -27,16 +27,16 @@ jobs:
       - name: Install Dependencies
         run: npm install
 
-      - name: Run Tests
-        run: npm test
+      - name: Run Tests in Headless Mode
+        # Updated command to run Angular tests in a CI environment
+        # --no-watch: Runs tests once instead of watching for changes
+        # --browsers=ChromeHeadless: Uses a headless version of Chrome that doesn't require a GUI
+        run: npm test -- --no-watch --browsers=ChromeHeadless
 
       - name: Build Application
-        # This will use the "build" script from your package.json, which should
-        # correspond to `ng build --configuration production` for an Angular app.
         run: npm run build
 
   # This job builds and pushes the Docker image to Docker Hub
-  # It only runs on a push to the main branch, after the test_and_build job succeeds
   build_and_push_docker:
     # This job depends on the test_and_build job finishing successfully
     needs: test_and_build
@@ -62,8 +62,6 @@ jobs:
       - name: Build and push Docker image
         uses: docker/build-push-action@v5
         with:
-          # The context is the root of your repository, where the Dockerfile is located
           context: .
           push: true
-          # The image will be tagged with your Docker Hub username and repo name
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/onai-pharma-frontend:latest
