@@ -1,5 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { AdminGuard } from './admin.guard'; // Corrected: Imports the CLASS 'AdminGuard'
 
 describe('AdminGuard', () => {
@@ -7,7 +8,7 @@ describe('AdminGuard', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [RouterTestingModule], // Required for guards that might navigate
+      imports: [RouterTestingModule, HttpClientTestingModule], // Required for guards that might navigate
       providers: [AdminGuard] // Provide the guard itself
     });
     guard = TestBed.inject(AdminGuard);
