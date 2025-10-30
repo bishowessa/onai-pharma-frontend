@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 import { PromoteUserComponent } from './promote-user.component';
 
@@ -8,7 +9,7 @@ describe('PromoteUserComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [PromoteUserComponent]
+      imports: [PromoteUserComponent, HttpClientTestingModule]
     })
     .compileComponents();
 

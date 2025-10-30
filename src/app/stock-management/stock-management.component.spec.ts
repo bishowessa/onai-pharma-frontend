@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 import { StockManagementComponent } from './stock-management.component';
 
@@ -8,7 +9,7 @@ describe('StockManagementComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [StockManagementComponent]
+      imports: [StockManagementComponent, HttpClientTestingModule]
     })
     .compileComponents();
 
